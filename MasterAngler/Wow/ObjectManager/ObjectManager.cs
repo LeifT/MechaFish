@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MasterAngler.Wow.Patch;
 using MasterAngler.Wow.Utils;
 
@@ -74,6 +75,7 @@ namespace MasterAngler.Wow.ObjectManager {
         }
 
         private static WowObject GetNewObject(WowObject.WowObjectType type, uint address) {
+            
             switch (type) {
                 case WowObject.WowObjectType.Container: {
                     return new WowContainer(address);

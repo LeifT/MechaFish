@@ -1,4 +1,6 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using System.Windows.Forms;
+using GalaSoft.MvvmLight;
 
 namespace MasterAngler.ViewModel.Data
 {
@@ -10,29 +12,30 @@ namespace MasterAngler.ViewModel.Data
     /// </summary>
     public class HotkeysViewModel : ViewModelBase
     {
-        private string _castRodKey;
-        private string _interactKey;
+        private Keys _castRodKey;
+        private Keys _interactKey;
 
         /// <summary>
         /// Initializes a new instance of the KeyBindingsViewModel class.
         /// </summary>
         public HotkeysViewModel() {
-            _castRodKey = "";
-            _interactKey = "";
+            _castRodKey = Keys.None;
+            _interactKey = Keys.None;
         }
 
-        public string CastRodKey {
+        public Keys CastRodKey {
             get { return _castRodKey; }
             set {
+                Console.WriteLine(value.ToString());
                 _castRodKey = value;
-                
                 RaisePropertyChanged();
             }
         }
 
-        public string InteractKey {
+        public Keys InteractKey {
             get { return _interactKey; }
             set {
+                Console.WriteLine(value.ToString());
                 _interactKey = value;
                 RaisePropertyChanged();
             }

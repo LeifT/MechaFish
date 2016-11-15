@@ -4,68 +4,45 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ignore="http://www.galasoft.ch/ignore"
+             xmlns:properties="clr-namespace:MasterAngler.Properties"
              mc:Ignorable="d ignore"
              DataContext="{Binding KeyBindings, Source={StaticResource Locator}}">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+
+        <Style TargetType="{x:Type TextBox}" x:Key="Input">
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="Margin" Value="5,2" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="Black" />
+            <EventSetter Event="KeyDown" Handler="UIElement_OnKeyDown" />
+            <EventSetter Event="GotFocus" Handler="UIElement_OnGotFocus" />
+            <Style.Triggers>
+                <Trigger Property="Text" Value="None">
+                    <Setter Property="Foreground" Value="LightGray" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <StackPanel Background="Yellow">
         <UniformGrid Columns="2">
-            <Label Content="Cast Rorhs" HorizontalAlignment="Left" />
-            <Grid>
-                <TextBox Name="CastRod" Margin="5,2" Text="{Binding CastRodKey}" GotFocus="UIElement_OnGotFocus" KeyDown="UIElement_OnKeyDown" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True" />
-                <TextBlock IsHitTestVisible="False" Text="Not Bound">
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="HorizontalAlignment"  Value="Center"/>
-                            <Setter Property="VerticalAlignment"  Value="Center"/>
-                            <Setter Property="Foreground" Value="LightGray"/>
-                            <Setter Property="Margin" Value="5,2"/>
-
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Text, ElementName=CastRod}" Value="">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </Grid>
-
-            <Label Content="Interact With Mouseover" HorizontalAlignment="Left" />
-            <Grid>
-                <TextBox Name="InteractWithMouseover" Margin="5,2" Text="{Binding InteractKey}" GotFocus="UIElement_OnGotFocus" KeyDown="UIElement_OnKeyDown" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True" Padding="0" />
-                
-                <TextBlock IsHitTestVisible="False" Text="Not Bound">
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="HorizontalAlignment"  Value="Center"/>
-                            <Setter Property="VerticalAlignment"  Value="Center"/>
-                            <Setter Property="Foreground" Value="LightGray"/>
-                            <Setter Property="Margin" Value="5,2"/>
-                         
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Text, ElementName=InteractWithMouseover}" Value="">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </Grid>
+            <Label Content="Cast Fishing"/>
+            <TextBox Text="{Binding Source={x:Static properties:Settings.Default}, Path=CastFishing, Mode=TwoWay}" Style="{StaticResource Input}"/>
+ 
+            <Label Content="Interact With Mouseover"/>
+            <TextBox Text="{Binding Source={x:Static properties:Settings.Default}, Path=Interact, Mode=TwoWay}" Style="{StaticResource Input}"/>
         </UniformGrid>
 
         <Grid Height="26">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal"  Visibility="{Binding ElementName=Unbind, Path=IsEnabled, Converter={StaticResource  BoolToVisConverter}}">
-                <Label Content="Press Key to Binrhs to Commanrhs ->" VerticalContentAlignment="Center"/>
-                <Label Name="Command" Content="Commanrhs" Padding="0,5,5,5" VerticalContentAlignment="Center" />
+                <Label Content="Press Key to Bind to Command ->" VerticalContentAlignment="Center"/>
+                <Label Name="Command" Content="Command" Padding="0,5,5,5" VerticalContentAlignment="Center" />
             </StackPanel>
         </Grid>
 
-        <Button Name="Unbind" Width="120" Content="Unbinrhs Key" Click="Unbind_OnClick" IsEnabled="False" />
+        <Button Name="Unbind" Width="120" Content="Unbind Key" Click="Unbind_OnClick" IsEnabled="False" />
     </StackPanel>
 </UserControl>
