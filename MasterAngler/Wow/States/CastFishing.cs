@@ -16,7 +16,7 @@ namespace MasterAngler.Wow.States {
         }
 
         public override void Run() {
-            Keyboard.KeyPress(Keys.D1);
+            Keyboard.KeyPress(Properties.Settings.Default.CastFishing);
         }
     }
 }

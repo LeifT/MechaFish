@@ -81,7 +81,6 @@
     <Compile Include="Extensions\FocusExtension.cs" />
     <Compile Include="FiniteStateMachine\Engine.cs" />
     <Compile Include="FiniteStateMachine\State.cs" />
-    <Compile Include="Settings.cs" />
     <Compile Include="ViewModel\ConsoleViewModel.cs" />
     <Compile Include="ViewModel\ControlViewModel.cs" />
     <Compile Include="ViewModel\DataViewModel.cs" />

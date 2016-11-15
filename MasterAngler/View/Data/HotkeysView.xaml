@@ -30,10 +30,10 @@
     <StackPanel Background="Yellow">
         <UniformGrid Columns="2">
             <Label Content="Cast Fishing"/>
-            <TextBox Text="{Binding Source={x:Static properties:Settings.Default}, Path=CastFishing, Mode=TwoWay}" Style="{StaticResource Input}"/>
+            <TextBox Text="{Binding Source={x:Static properties:Settings.Default}, Path=CastFishing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Input}"/>
  
             <Label Content="Interact With Mouseover"/>
-            <TextBox Text="{Binding Source={x:Static properties:Settings.Default}, Path=Interact, Mode=TwoWay}" Style="{StaticResource Input}"/>
+            <TextBox Text="{Binding Source={x:Static properties:Settings.Default}, Path=Interact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Input}"/>
         </UniformGrid>
 
         <Grid Height="26">

@@ -6,7 +6,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ignore="http://www.galasoft.ch/ignore"
              StartupUri="MainWindow.xaml"
-              xmlns:properties="clr-namespace:MasterAngler.Properties"
              mc:Ignorable="d ignore">
     
     <Application.Resources>
