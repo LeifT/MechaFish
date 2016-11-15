@@ -8,7 +8,18 @@
         DataContext="{Binding Control, Source={StaticResource Locator}}">
 
     <StackPanel Orientation="Horizontal">
-        <ToggleButton Content="Start" IsEnabled="{Binding IsStartEnabled}" IsChecked="{Binding IsRunning}" Width="60"/>
+        <ToggleButton IsEnabled="{Binding IsStartEnabled}" IsChecked="{Binding IsRunning}" Width="60">
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Content" Value="Start"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Content" Value="Stop"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
         <Label VerticalContentAlignment="Bottom" Content="{Binding Message}"/>
     </StackPanel>
 </UserControl>

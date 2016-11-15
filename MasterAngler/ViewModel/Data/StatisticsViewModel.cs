@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
@@ -84,12 +85,19 @@ namespace MasterAngler.ViewModel.Data
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the StatisticsViewModel class.
-        /// </summary>
+        private static CancellationTokenSource _cts;
+        private static CancellationToken _token;
+
         public StatisticsViewModel()
         {
-            Messenger.Default.Register<bool>(this, (action) => UpdateMouseoverGuid());
+            Messenger.Default.Register<bool>(this, UpdateMouseoverGuid);
+           // Messenger.Default.Register<bool>(this, (action) => Stop());
+        }
+
+        private bool _isRunning;
+
+        private void Stop() {
+
         }
 
         public string MouseOverGuid {
@@ -134,29 +142,56 @@ namespace MasterAngler.ViewModel.Data
             }
         }
 
-        private void UpdateMouseoverGuid() {
-            Task.Run(async () => {
-                while (true) {
-                    await Task.Delay(1);
-           
-                    ObjectManager.Dump();
+        private void UpdateMouseoverGuid(bool action) {
 
-                    PlayerName = ObjectManager.LocalPlayer.Name;
-                    EmptySlots = ObjectManager.LocalPlayer.BagSlotsEmpty;
-                    var mouse = ObjectManager.TargetObject;
-                    
+            if (action) {
+                if (_isRunning) {
+                    return;
+                }
 
-                    if (mouse != null && mouse.IsValid) {
-                        Position = mouse.Position.ToString();
+                _isRunning = true;
+                _cts = new CancellationTokenSource();
+                _token = _cts.Token;
 
-                        if (ObjectManager.LocalPlayer.IsTexting) {
-                            mouse.SetMouseOver();
+                Task.Run(async () => {
+                    while (true) {
+
+
+                        ObjectManager.Dump();
+
+                        PlayerName = ObjectManager.LocalPlayer.Name;
+                        EmptySlots = ObjectManager.LocalPlayer.BagSlotsEmpty;
+                        var mouse = ObjectManager.TargetObject;
+
+
+                        if (mouse != null && mouse.IsValid) {
+                            Position = mouse.Position.ToString();
+
+                            //if (ObjectManager.LocalPlayer.IsTexting) {
+                            //    mouse.SetMouseOver();
+                            //}
                         }
 
-                        
+                        await Task.Delay(1, _token).ContinueWith(tsk => { });
+
+                        if (_cts.IsCancellationRequested) {
+                            break;
+                        }
+
                     }
+                }, _token);
+            } else {
+                if (!_isRunning)
+                {
+                    return;
                 }
-            });
+
+                _cts.Cancel();
+                _cts.Dispose();
+                _isRunning = false;
+            }
+
+            
         }
     }
 }

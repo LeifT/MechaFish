@@ -57,6 +57,7 @@ namespace MasterAngler.ViewModel {
                     Start();
                 } else {
                     ObjectManager.Stop();
+                    Stop();
                 }
 
                 RaisePropertyChanged();
@@ -78,6 +79,11 @@ namespace MasterAngler.ViewModel {
         private uint GetFocusedProcessId() {
             IntPtr hwnd = NativeMethods.GetForegroundWindow();
             return NativeMethods.GetWindowThreadProcessId(hwnd);
+        }
+
+        private void Stop() {
+            Messenger.Default.Send<bool>(false);
+                _engine.StopEngine();
         }
 
         private void Start() {
