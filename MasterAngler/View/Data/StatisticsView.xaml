@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="MasterAngler.View.Data.StatisticsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.galasoft.ch/ignore"
+        mc:Ignorable="d ignore"
+        DataContext="{Binding Statistics, Source={StaticResource Locator}}">
+
+    <Grid Background="Green">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Player name:"/>
+                <Label Padding="0,5" Content="{Binding PlayerName}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Position:"/>
+                <Label Padding="0,5" Content="{Binding Position}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Empty slots:"/>
+                <Label Padding="0,5" Content="{Binding EmptySlots}"/>
+            </StackPanel>
+            <!--<StackPanel Orientation="Horizontal">
+                <Label Content="X:"/>
+                <Label Padding="0,5" Content="{Binding X}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Y:"/>
+                <Label Padding="0,5" Content="{Binding Y}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Z:"/>
+                <Label Padding="0,5" Content="{Binding Z}"/>
+            </StackPanel>-->
+            <Label Content="World to screen"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="X:"/>
+                <Label Padding="0,5" Content="{Binding Wx}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Y:"/>
+                <Label Padding="0,5" Content="{Binding Wy}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
