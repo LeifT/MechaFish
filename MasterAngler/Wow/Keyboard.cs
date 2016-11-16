@@ -10,12 +10,12 @@ namespace MasterAngler.Wow {
 
         public static void KeyDown(Keys key)
         {
-            NativeMethods.SendMessage(Memory.GameMemory.WowWindowHandle, WM_KEYDOWN, new IntPtr((long)key), IntPtr.Zero);
+            NativeMethods.SendMessage(Memory.WindowHandle, WM_KEYDOWN, new IntPtr((long)key), IntPtr.Zero);
         }
 
         public static void KeyUp(Keys key)
         {
-            NativeMethods.SendMessage(Memory.GameMemory.WowWindowHandle, WM_KEYUP, new IntPtr((long)key), IntPtr.Zero);
+            NativeMethods.SendMessage(Memory.WindowHandle, WM_KEYUP, new IntPtr((long)key), IntPtr.Zero);
         }
 
         public static void KeyPress(Keys key)

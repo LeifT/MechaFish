@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using MasterAngler.FiniteStateMachine;
+using MasterAngler.ViewModel.Data;
 using MasterAngler.Wow.ObjectManager;
+using Microsoft.Practices.ServiceLocation;
 
 namespace MasterAngler.Wow.States {
     public class CatchBobber : State {
@@ -15,7 +17,10 @@ namespace MasterAngler.Wow.States {
         public override bool NeedToRun {
 
             get {
-                _bobber = ObjectManager.ObjectManager.GetObjectsOfType<WowGameObject>().FirstOrDefault(b => b.IsBobbing);
+                _bobber =
+                    ObjectManager.ObjectManager.GetObjectsOfType<WowGameObject>()
+                        .Where((o => o.CreatedBy == ObjectManager.ObjectManager.LocalPlayer.Guid && o.IsBobbing))
+                        .FirstOrDefault();
 
                 return _bobber != null && _bobber.IsValid;
             }
@@ -26,12 +31,16 @@ namespace MasterAngler.Wow.States {
         }
 
         public override void Enter() {
+            ServiceLocator.Current.GetInstance<StatisticsViewModel>().FishLooted++;
+            ServiceLocator.Current.GetInstance<StatisticsViewModel>().Found();
             int sleepTime = _rand.Next(240, 340);
             Thread.Sleep(sleepTime);
             _bobber.SetMouseOver();
+            //Console.WriteLine(DateTime.UtcNow);
             sleepTime = _rand.Next(240, 340);
             Thread.Sleep(sleepTime);
-            Keyboard.KeyPress(Keys.I);
+            //Console.WriteLine(DateTime.UtcNow);
+            Keyboard.KeyPress(Properties.KeyBindings.Default.Interact);
         }
     }
 }

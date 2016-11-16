@@ -42,7 +42,7 @@ namespace MasterAngler.Wow {
 
         public Matrix ProjectionMatrix {
             get {
-                var wowWindowSize = Memory.WowWindowSize;
+                var wowWindowSize = Memory.WindowSize;
                 var aspectRatio = 0f;
 
                 if ((wowWindowSize.X > 0) && (wowWindowSize.Y > 0)) {
@@ -61,7 +61,7 @@ namespace MasterAngler.Wow {
         }
 
         public bool WorldToScreen(Vector3 position, ref Point result) {
-            var wowWindowSize = Memory.WowWindowSize;
+            var wowWindowSize = Memory.WindowSize;
             var vector3 = Vector3.Project(position, 0f, 0f, wowWindowSize.X, wowWindowSize.Y, 0f, 1000f, ViewMatrix*ProjectionMatrix*Matrix.Identity);
 
             result.X = (int) vector3.X;

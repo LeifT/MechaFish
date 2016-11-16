@@ -18,7 +18,14 @@ namespace MasterAngler.Wow {
         public static IntPtr GetForegroundWindow() {
             return TryGetForegroundWindowNative();
         }
-        
+
+        public static Rect GetWindowRect(IntPtr hWnd)
+        {
+            Rect lpRect;
+            TryGetWindowRectNative(hWnd, out lpRect);
+            return lpRect;
+        }
+
         public static Rect GetClientRect(IntPtr hWnd) {
             Rect lpRect;
             TryGetClientRectNative(hWnd, out lpRect);
@@ -27,7 +34,23 @@ namespace MasterAngler.Wow {
 
         public static Point ClientToScreen(IntPtr hwnd, int x, int y) {
             Point lpPoint = new Point(x, y);
-            TryClientToScreenNative(hwnd, ref lpPoint);
+
+            if (hwnd != IntPtr.Zero) {
+                TryClientToScreenNative(hwnd, ref lpPoint);
+            }
+            
+            return lpPoint;
+        }
+
+        public static Point ScreenToClient(IntPtr hwnd, int x, int y)
+        {
+            Point lpPoint = new Point(x, y);
+
+            if (hwnd != IntPtr.Zero)
+            {
+                TryScreenToClientNative(hwnd, ref lpPoint);
+            }
+
             return lpPoint;
         }
 
@@ -64,6 +87,12 @@ namespace MasterAngler.Wow {
                 throw new Win32Exception(Marshal.GetLastWin32Error());
             }
             return true;
+        }
+
+        public static Point GetCursorPos() {
+            Point p = new Point();
+            TryGetCursorPosNative(ref p);
+            return p;
         }
 
         #region Nested type: ProcessAccess
@@ -123,6 +152,15 @@ namespace MasterAngler.Wow {
 
         #region PInvokes
 
+        [DllImport("user32.dll", EntryPoint = "ScreenToClient")]
+        private static extern bool TryScreenToClientNative(IntPtr hWnd, ref Point lpPoint);
+
+        [DllImport("user32.dll", EntryPoint = "ClientToScreen", CharSet = CharSet.None, ExactSpelling = false)]
+        private static extern bool TryClientToScreenNative(IntPtr hwnd, ref Point lpPoint);
+
+        [DllImport("user32.dll", EntryPoint = "GetCursorPos")]
+        private static extern bool TryGetCursorPosNative(ref Point lpPoint);
+
         [DllImport("user32.dll", EntryPoint = "SendMessage", CharSet = CharSet.Auto, ExactSpelling = false)]
         private static extern IntPtr TrySendMessageNative(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
@@ -135,8 +173,10 @@ namespace MasterAngler.Wow {
         [DllImport("user32.dll", EntryPoint = "GetClientRect", CharSet = CharSet.None, ExactSpelling = false)]
         private static extern bool TryGetClientRectNative(IntPtr hWnd, out Rect lpRect);
 
-        [DllImport("user32.dll", EntryPoint = "ClientToScreen", CharSet = CharSet.None, ExactSpelling = false)]
-        private static extern bool TryClientToScreenNative(IntPtr hwnd, ref Point lpPoint);
+        [DllImport("user32.dll", EntryPoint = "GetWindowRect")]
+        private static extern bool TryGetWindowRectNative(IntPtr hwnd, out Rect rectangle);
+
+
 
         [DllImport("user32.dll", EntryPoint = "SetCursorPos", CharSet = CharSet.None, ExactSpelling = false)]
         private static extern bool TrySetCursorPosNative(int x, int y);
@@ -157,6 +197,7 @@ namespace MasterAngler.Wow {
 
         #endregion
 
+        [StructLayout(LayoutKind.Sequential)]
         public struct Rect {
             public int Left;
             public int Top;

@@ -39,8 +39,7 @@
             public const uint Origin = 0xAF8; // Address + this    
             public const uint CastingSpellId = 0x1048; // UnitAddress + this
             public const uint ChannelSpellId = 0x1098; // UnitAddress + this
-             
-            //public const uint ChannelSpellStartTime = ChannelSpellId + 4; // Address + this
+            public const uint ChannelSpellStartTime = ChannelSpellId + 4; // Address + this
             //public const uint ChannelSpellEndTime = ChannelSpellId + 8; // Address + this
         }
 

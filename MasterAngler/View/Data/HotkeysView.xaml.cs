@@ -37,7 +37,7 @@ namespace MasterAngler.View.Data
                 Unbind.IsEnabled = false;
             }
 
-            Properties.Settings.Default.Save();
+            Properties.KeyBindings.Default.Save();
         }
 
         private void UIElement_OnGotFocus(object sender, RoutedEventArgs e) {
@@ -49,7 +49,7 @@ namespace MasterAngler.View.Data
         private void Unbind_OnClick(object sender, RoutedEventArgs e) {
             Unbind.IsEnabled = false;
             _lastFocusedTextBox.Text = Key.None.ToString();
-            Properties.Settings.Default.Save();
+            Properties.KeyBindings.Default.Save();
 
         }
     }

@@ -14,7 +14,7 @@
                 <Label Padding="0,5" Content="{Binding PlayerName}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Position:"/>
+                <Label Content="Target Position:"/>
                 <Label Padding="0,5" Content="{Binding Position}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -35,13 +35,27 @@
             </StackPanel>-->
             <Label Content="World to screen"/>
             <StackPanel Orientation="Horizontal">
-                <Label Content="X:"/>
-                <Label Padding="0,5" Content="{Binding Wx}"/>
+                <Label Content="First Fish:"/>
+                <Label Padding="0,5" Content="{Binding FirstFish}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Y:"/>
-                <Label Padding="0,5" Content="{Binding Wy}"/>
+                <Label Content="Last Fish:"/>
+                <Label Padding="0,5" Content="{Binding LastFish}"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Average Fish:"/>
+                <Label Padding="0,5" Content="{Binding AverageFish}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Fish Counter:"/>
+                <Label Padding="0,5" Content="{Binding FishLooted}"/>
+            </StackPanel>
+            <Canvas Width="256" Height="144" Background="Black">
+                <Rectangle Width="{Binding GameWindowWidth}" Height="{Binding GameWindowHeight}" Canvas.Left="{Binding GameWindowX}" Canvas.Top="{Binding GameWindowY}" Fill="Wheat"/>
+                <Ellipse Width="4" Height="4" Fill="Red" Canvas.Left="{Binding MouseX}" Canvas.Top="{Binding MouseY}">
+                    
+                </Ellipse>
+            </Canvas>
         </StackPanel>
     </Grid>
 </UserControl>

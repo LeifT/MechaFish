@@ -4,9 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
+        xmlns:properties="clr-namespace:MasterAngler.Properties"
         mc:Ignorable="d ignore"
         DataContext="{Binding Settings, Source={StaticResource Locator}}">
 
     <Grid Background="Red">
+        <StackPanel>
+            <UniformGrid Columns="2">
+                <Label Content="Background Mode"/>
+                <ToggleButton IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=BackgroundMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="ButtonBase_OnClick"   Content="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+            </UniformGrid>
+       
+            
+        </StackPanel>
     </Grid>
 </UserControl>

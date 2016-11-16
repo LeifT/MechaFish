@@ -5,46 +5,133 @@ using MasterAngler.Wow.ObjectManager;
 
 namespace MasterAngler.Wow.Utils {
     public class ForegroundMouse : IMouseStrategy {
+
+        private Point _position;
+
+        private Point Position {
+            get {
+                _position = NativeMethods.GetCursorPos();
+                return _position;
+            }
+
+            set {
+                NativeMethods.SetCursorPos(value.X, value.Y);
+            }
+        }
+
         public bool SetMouseOver(WowObject wowObject) {
-            Point point = new Point();
+            Point objectClientPosition = new Point();
+            
+            var visible = WowCamera.ActiveCamera.WorldToScreen(wowObject.Position, ref objectClientPosition);
 
-            var isWithinScreen = WowCamera.ActiveCamera.WorldToScreen(wowObject.Position, ref point);
-
-            if (!isWithinScreen) {
+            if (!visible) {
                 return false;
             }
 
-            //var a = NativeMethods.GetClientRect(Memory.GameMemory.WowWindowHandle);
+            Point start = Position;
+            Point target = NativeMethods.ClientToScreen(Memory.WindowHandle, objectClientPosition.X, objectClientPosition.Y);
+
+            Point pos = NativeMethods.ClientToScreen(Memory.WindowHandle, 0, 0);
+            Point size = Memory.WindowSize;
+
+            float t = 0;
+
+            while (!wowObject.IsMouseOver) {
+                Position = Lerp(start, target, t);
+
+                if (IsMouseInGameWindow(_position, size, pos)) {
+                    objectClientPosition = NativeMethods.ScreenToClient(Memory.WindowHandle, _position.X, _position.Y);
+                    NativeMethods.SendMessage(Memory.WindowHandle, 512, IntPtr.Zero, Lpraram(objectClientPosition));
+                }
+
+                t += 0.001f;
+                Thread.Sleep(1);
+            }
 
 
-            //if (point.X < a.Left) {
-            //    point.X = a.Left;
+            //float t = 0;
+
+            //while (!wowObject.IsMouseOver)
+            //{
+            //    NativeMethods.SetCursorPos(Lerp(start.X, target.X, t), Lerp(start.Y, target.Y, t));
+
+            //    //SetMouse(x, y);
+
+            //    t += 0.001f;
+            //    Thread.Sleep(1);
             //}
 
-            //if (point.X > a.Right){
-            //    point.X = a.Right - 1;
-            //}
-
-            //if (point.Y < a.Top) {
-            //    point.Y = a.Top;
-            //}
-
-            //if (point.Y > a.Bottom) {
-            //    point.Y = a.Bottom -1;
-            //}
-
-            MoveMouse(point.X, point.Y);
+            //SetMouse(point.X, point.Y);
             return wowObject.IsMouseOver;
         }
 
-        private void MoveMouse(int x, int y) {
-            Point point = NativeMethods.ClientToScreen(Memory.GameMemory.WowWindowHandle, x, y);
-            NativeMethods.SetCursorPos(point.X, point.Y);
-            NativeMethods.SendMessage(Memory.GameMemory.WowWindowHandle, 512, IntPtr.Zero, Lpraram(x, y));
+        private int Lerp(int start, int target, float t) {
+            if (t < 0) {
+                t = 0;
+            }
+
+            if (t > 1) {
+                t = 1;
+            }
+
+            return (int) (start*(1.0 - t) + target*t);
         }
-        
-        private static IntPtr Lpraram(int x, int y) {
-            return (IntPtr)(y << 0x10 | x & 0xFFFF);
+
+        private Point Lerp(Point start, Point end, float t) {
+            return new Point(Lerp(start.X, end.X, t), Lerp(start.Y, end.Y, t));
+        }
+
+        private bool IsMouseInGameWindow(Point cursorPos, Point size, Point pos) {
+            //Point size = Memory.WindowSize;
+            //Point pos = NativeMethods.ClientToScreen(Memory.WindowHandle, 0, 0);
+            //Point cursorPos = NativeMethods.GetCursorPos();
+
+            if (cursorPos.X < pos.X) {
+                return false;
+            }
+
+            if (cursorPos.X > size.X + pos.X) {
+                return false;
+            }
+
+            if (cursorPos.Y < pos.Y) {
+                return false;
+            }
+
+            if (cursorPos.Y > pos.Y + size.Y) {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        private void SetMouse(int x, int y)
+        {
+            //Point objectScreenPosition = NativeMethods.ClientToScreen(Memory.WindowHandle, x, y);
+            ////Point cursorPosition = NativeMethods.GetCursorPos();
+
+            //// Game window
+            //if (IsMouseInGameWindow())
+            //{
+            //    NativeMethods.SendMessage(Memory.WindowHandle, 512, IntPtr.Zero, Lpraram(x, y));
+            //}
+
+            //return;
+
+            //Screen
+           Point mouseScreenPoint = NativeMethods.ClientToScreen(Memory.WindowHandle, x, y);
+            NativeMethods.SetCursorPos(mouseScreenPoint.X, mouseScreenPoint.Y);
+
+            ////Game window
+            //if (IsMouseInGameWindow())
+            //{
+            //    NativeMethods.SendMessage(Memory.WindowHandle, 512, IntPtr.Zero, Lpraram(x, y));
+            //}
+        }
+
+        private static IntPtr Lpraram(Point p) {
+            return (IntPtr)(p.Y << 0x10 | p.X & 0xFFFF);
         }
     }
 }

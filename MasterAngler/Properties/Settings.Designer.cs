@@ -25,37 +25,13 @@ namespace MasterAngler.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("None")]
-        public global::System.Windows.Forms.Keys Interact {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BackgroundMode {
             get {
-                return ((global::System.Windows.Forms.Keys)(this["Interact"]));
+                return ((bool)(this["BackgroundMode"]));
             }
             set {
-                this["Interact"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("None")]
-        public global::System.Windows.Forms.Keys CastFishing {
-            get {
-                return ((global::System.Windows.Forms.Keys)(this["CastFishing"]));
-            }
-            set {
-                this["CastFishing"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string HELLO {
-            get {
-                return ((string)(this["HELLO"]));
-            }
-            set {
-                this["HELLO"] = value;
+                this["BackgroundMode"] = value;
             }
         }
     }

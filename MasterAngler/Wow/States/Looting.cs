@@ -11,7 +11,7 @@ namespace MasterAngler.Wow.States {
 
         public override void Run() {
 
-            if (_counter > 100) {
+            if (_counter > 20) {
                 Console.WriteLine("Bags full");
             }
 
@@ -24,7 +24,7 @@ namespace MasterAngler.Wow.States {
         }
 
         public override void Exit() {
-            Console.WriteLine("Looted some items.");
+            
         }
     }
 }

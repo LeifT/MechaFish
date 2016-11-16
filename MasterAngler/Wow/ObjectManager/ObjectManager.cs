@@ -34,7 +34,7 @@ namespace MasterAngler.Wow.ObjectManager {
         static ObjectManager() {
             _enteties = new Dictionary<WowGuid, WowObject>();
             Dump();
-            WowObject.SetMouseStrategy(new BackgroundMouse());
+            WowObject.SetMouseStrategy(new ForegroundMouse());
             LocalPlayer = new WowLocalPlayer(Memory.GameMemory.Read<uint>(Memory.BaseAddress + Addresses.Player.LocalPlayer));
         }
 

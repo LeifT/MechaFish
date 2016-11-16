@@ -1,4 +1,6 @@
-﻿namespace MasterAngler.View.Data
+﻿using System.Windows;
+
+namespace MasterAngler.View.Data
 {
     /// <summary>
     /// Description for SettingsView.
@@ -11,6 +13,10 @@
         public SettingsView()
         {
             InitializeComponent();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e) {
+            Properties.Settings.Default.Save();
         }
     }
 }

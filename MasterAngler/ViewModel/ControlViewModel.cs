@@ -88,7 +88,7 @@ namespace MasterAngler.ViewModel {
 
         private void Start() {
             Messenger.Default.Send<bool>(true);
-            _engine.StartEngine(30);
+           _engine.StartEngine(30);
         }
 
         private void GetGameWindow() {

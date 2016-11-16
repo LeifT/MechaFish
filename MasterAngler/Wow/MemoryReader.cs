@@ -12,11 +12,8 @@ namespace MasterAngler.Wow {
         private ProcessModule _processModule;
         public ProcessModule MainModule => _processModule ?? (_processModule = Process.GetProcessById(_processId).Modules[0]);
 
-        public IntPtr WowWindowHandle { get; private set; }
         public bool IsOpen => _processId > 0;
         public IntPtr ProcessHandle { get; private set; }
-
-
 
         #region IDisposable Members
 
@@ -38,17 +35,10 @@ namespace MasterAngler.Wow {
                 _disposed = true;
             }
 
-            //if (WowWindowHandle != IntPtr.Zero)
-            //{
-            //    NativeMethods.CloseHandle(WowWindowHandle);
-            //}
-
             // Clean up native resources
             if (ProcessHandle != IntPtr.Zero) {
                 NativeMethods.CloseHandle(ProcessHandle);
             }
-
-
         }
 
         ~MemoryReader() {
@@ -63,7 +53,6 @@ namespace MasterAngler.Wow {
             }
 
             ProcessHandle = NativeMethods.OpenProcess( NativeMethods.ProcessAccess.AllAccess, false, procId);
-            WowWindowHandle = Process.GetProcessById(procId).MainWindowHandle;
 
             if (ProcessHandle == IntPtr.Zero) {
                 throw new Win32Exception("Failed to open the process for reading.");
