@@ -24,13 +24,14 @@ namespace MasterAngler.ViewModel
         private bool _isOptionsVisible;
 
         public string SelectedItem {
+            
             get { return _selectedItem; }
 
             set {
                 if (_selectedItem.Equals(value)) {
                     return;
                 }
-
+          
                 Hide(_selectedItem);
                 _selectedItem = value;
                 Show(_selectedItem);
