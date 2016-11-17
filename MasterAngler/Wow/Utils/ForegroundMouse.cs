@@ -55,23 +55,23 @@ namespace MasterAngler.Wow.Utils {
 
             while (!wowObject.IsMouseOver) {
                 var currentTime = timer.ElapsedMilliseconds;
-                float deltatime = (float)((currentTime - oldTime) / 1000.0f);
+                float deltatime = ((currentTime - oldTime));
                 oldTime = currentTime;
 
-                Position = Lerp(start, end, t);
+                Position = MoveTowards(start, end, t);
 
-                if (IsMouseInGameWindow(_position, clientSize, clientPos) && lastPos.X != _position.X && lastPos.Y != _position.Y) {
-                    lastPos = _position;
-                    objectClientPosition = NativeMethods.ScreenToClient(Memory.WindowHandle, _position.X, _position.Y);
-                    NativeMethods.SendMessage(Memory.WindowHandle, 512, IntPtr.Zero, Lpraram(objectClientPosition));
-                }
+                //if (IsMouseInGameWindow(_position, clientSize, clientPos) && lastPos.X != _position.X && lastPos.Y != _position.Y) {
+                //    lastPos = _position;
+                //    objectClientPosition = NativeMethods.ScreenToClient(Memory.WindowHandle, _position.X, _position.Y);
+                //    NativeMethods.SendMessage(Memory.WindowHandle, 512, IntPtr.Zero, Lpraram(objectClientPosition));
+                //}
 
                 t += deltatime;
             }
             return wowObject.IsMouseOver;
         }
 
-        private int Lerp(int start, int target, float t) {
+        private float Lerp(float start, float target, float t) {
             if (t < 0) {
                 t = 0;
             }
@@ -80,11 +80,35 @@ namespace MasterAngler.Wow.Utils {
                 t = 1;
             }
 
-            return (int) (start*(1.0 - t) + target*t);
+            return (start*(1.0f - t) + target*t);
         }
 
         private Point Lerp(Point start, Point end, float t) {
-            return new Point(Lerp(start.X, end.X, t), Lerp(start.Y, end.Y, t));
+            return new Point((int)Lerp(start.X, end.X, t), (int)Lerp(start.Y, end.Y, t));
+        }
+
+        public static Point MoveTowards(Point current, Point target, float maxDistanceDelta)
+        {
+            Point a = new Point(target.X - current.X, target.Y - current.Y);
+
+            float magnitude = (float) Math.Sqrt(a.X * a.X + a.Y * a.Y);
+
+            if (magnitude <= maxDistanceDelta || Math.Abs(magnitude) < float.Epsilon) {
+                return target;
+            }
+
+            var b = (a.X/magnitude);
+            var c = (a.Y/magnitude);
+
+
+            return new Point((int)(current.X + b * maxDistanceDelta), (int)(current.Y +  c * maxDistanceDelta));
+        }
+
+        public static float MoveTowards(float current, float target, float maxDelta) {
+            if (Math.Abs(target - current) <= maxDelta) {
+                return target;
+            }
+            return current + Math.Sign(target - current) * maxDelta;
         }
 
         private bool IsMouseInGameWindow(Point cursorPos, Point size, Point pos) {
