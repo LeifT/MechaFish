@@ -139,6 +139,7 @@
     <Compile Include="Wow\Utils\ForegroundMouse.cs" />
     <Compile Include="Wow\Utils\IContainer.cs" />
     <Compile Include="Wow\ObjectManager\ObjectManager.cs" />
+    <Compile Include="Wow\Utils\MathUtils.cs" />
     <Compile Include="Wow\WowBackpack.cs" />
     <Compile Include="Wow\ObjectManager\WowContainer.cs" />
     <Compile Include="Wow\ObjectManager\WowGameObject.cs" />

@@ -34,5 +34,17 @@ namespace MasterAngler.Properties {
                 this["BackgroundMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MouseTeleport {
+            get {
+                return ((bool)(this["MouseTeleport"]));
+            }
+            set {
+                this["MouseTeleport"] = value;
+            }
+        }
     }
 }
