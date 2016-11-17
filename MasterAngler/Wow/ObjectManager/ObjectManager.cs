@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MasterAngler.Properties;
 using MasterAngler.Wow.Patch;
 using MasterAngler.Wow.Utils;
 
@@ -34,6 +35,7 @@ namespace MasterAngler.Wow.ObjectManager {
         static ObjectManager() {
             _enteties = new Dictionary<WowGuid, WowObject>();
             Dump();
+
             WowObject.SetMouseStrategy(new ForegroundMouse());
             LocalPlayer = new WowLocalPlayer(Memory.GameMemory.Read<uint>(Memory.BaseAddress + Addresses.Player.LocalPlayer));
         }

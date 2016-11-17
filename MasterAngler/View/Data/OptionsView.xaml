@@ -13,6 +13,8 @@
             <UniformGrid Columns="2">
                 <Label Content="Background Mode"/>
                 <ToggleButton IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=BackgroundMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="ButtonBase_OnClick"   Content="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+                <Label Content="Mouse Teleport"/>
+                <ToggleButton IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=MouseTeleport, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="ButtonBase_OnClick"   Content="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
             </UniformGrid>
        
             

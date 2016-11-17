@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 using MasterAngler.Properties;
 using MasterAngler.Wow.ObjectManager;
@@ -43,6 +44,7 @@ namespace MasterAngler.Wow.Utils {
 
             if (Settings.Default.MouseTeleport) {
                 Position = target;
+                Thread.Sleep(200);
                 return wowObject.IsMouseOver;
             }
 
@@ -61,7 +63,7 @@ namespace MasterAngler.Wow.Utils {
                 Position = MathUtils.MoveTowards(start, target, t);
                 t += deltaTime;
             }
-
+            Thread.Sleep(200);
             return wowObject.IsMouseOver;
         }
 

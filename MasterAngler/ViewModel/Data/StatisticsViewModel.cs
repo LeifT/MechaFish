@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
@@ -31,7 +29,7 @@ namespace MasterAngler.ViewModel.Data {
         private string _playerName = "";
         private string _position = "unknown";
         private double _totalTime;
-        private readonly List<string> all = new List<string>();
+        //private readonly List<string> all = new List<string>();
         public DateTime FoundTime;
         public DateTime StartTime;
 
@@ -39,7 +37,7 @@ namespace MasterAngler.ViewModel.Data {
             FirstFish = double.MaxValue;
             LastFish = double.MinValue;
 
-            Messenger.Default.Register<bool>(this, UpdateMouseoverGuid);
+            Messenger.Default.Register<bool>(this, Update);
             // Messenger.Default.Register<bool>(this, (action) => Stop());
         }
 
@@ -210,27 +208,27 @@ namespace MasterAngler.ViewModel.Data {
             }
         }
 
-        public void Found() {
-            FoundTime = DateTime.Now;
+        //public void Found() {
+        //    FoundTime = DateTime.Now;
 
-            var seconds = (FoundTime - StartTime).TotalSeconds;
+        //    var seconds = (FoundTime - StartTime).TotalSeconds;
 
-            all.Add(seconds.ToString());
+        //    all.Add(seconds.ToString());
 
-            TotalTime += seconds;
+        //    TotalTime += seconds;
 
-            if (seconds < FirstFish) {
-                FirstFish = seconds;
-            }
+        //    if (seconds < FirstFish) {
+        //        FirstFish = seconds;
+        //    }
 
-            if (seconds > LastFish) {
-                LastFish = seconds;
-            }
+        //    if (seconds > LastFish) {
+        //        LastFish = seconds;
+        //    }
 
-            AverageFish = TotalTime/FishLooted;
-        }
+        //    AverageFish = TotalTime/FishLooted;
+        //}
 
-        private void UpdateMouseoverGuid(bool action) {
+        private void Update(bool action) {
             if (action) {
                 if (_isRunning) {
                     return;
@@ -291,7 +289,7 @@ namespace MasterAngler.ViewModel.Data {
                 _cts.Dispose();
                 _isRunning = false;
 
-                File.WriteAllLines("test.txt", all.ToArray());
+                //File.WriteAllLines("test.txt", all.ToArray());
 
                 //foreach (var d in all) {
                 //    file.WriteLine(d);
