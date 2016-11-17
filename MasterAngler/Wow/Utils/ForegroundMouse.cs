@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using MasterAngler.Wow.ObjectManager;
@@ -15,6 +16,12 @@ namespace MasterAngler.Wow.Utils {
             }
 
             set {
+                if (_position.X == value.X && _position.Y == value.Y) {
+                    return;
+                }
+
+                _position.X = value.X;
+                _position.Y = value.Y;
                 NativeMethods.SetCursorPos(value.X, value.Y);
             }
         }
@@ -28,40 +35,39 @@ namespace MasterAngler.Wow.Utils {
                 return false;
             }
 
-            Point start = Position;
-            Point target = NativeMethods.ClientToScreen(Memory.WindowHandle, objectClientPosition.X, objectClientPosition.Y);
 
-            Point pos = NativeMethods.ClientToScreen(Memory.WindowHandle, 0, 0);
-            Point size = Memory.WindowSize;
+
+            Point start = Position;
+            Point end = NativeMethods.ClientToScreen(Memory.WindowHandle, objectClientPosition.X, objectClientPosition.Y);
+
+            Point clientPos = NativeMethods.ClientToScreen(Memory.WindowHandle, 0, 0);
+            Point clientSize = Memory.WindowSize;
+
+          
 
             float t = 0;
 
-            while (!wowObject.IsMouseOver) {
-                Position = Lerp(start, target, t);
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
 
-                if (IsMouseInGameWindow(_position, size, pos)) {
+            long oldTime = timer.ElapsedMilliseconds;
+            Point lastPos = _position;
+
+            while (!wowObject.IsMouseOver) {
+                var currentTime = timer.ElapsedMilliseconds;
+                float deltatime = (float)((currentTime - oldTime) / 1000.0f);
+                oldTime = currentTime;
+
+                Position = Lerp(start, end, t);
+
+                if (IsMouseInGameWindow(_position, clientSize, clientPos) && lastPos.X != _position.X && lastPos.Y != _position.Y) {
+                    lastPos = _position;
                     objectClientPosition = NativeMethods.ScreenToClient(Memory.WindowHandle, _position.X, _position.Y);
                     NativeMethods.SendMessage(Memory.WindowHandle, 512, IntPtr.Zero, Lpraram(objectClientPosition));
                 }
 
-                t += 0.001f;
-                Thread.Sleep(1);
+                t += deltatime;
             }
-
-
-            //float t = 0;
-
-            //while (!wowObject.IsMouseOver)
-            //{
-            //    NativeMethods.SetCursorPos(Lerp(start.X, target.X, t), Lerp(start.Y, target.Y, t));
-
-            //    //SetMouse(x, y);
-
-            //    t += 0.001f;
-            //    Thread.Sleep(1);
-            //}
-
-            //SetMouse(point.X, point.Y);
             return wowObject.IsMouseOver;
         }
 
@@ -82,10 +88,6 @@ namespace MasterAngler.Wow.Utils {
         }
 
         private bool IsMouseInGameWindow(Point cursorPos, Point size, Point pos) {
-            //Point size = Memory.WindowSize;
-            //Point pos = NativeMethods.ClientToScreen(Memory.WindowHandle, 0, 0);
-            //Point cursorPos = NativeMethods.GetCursorPos();
-
             if (cursorPos.X < pos.X) {
                 return false;
             }
@@ -103,31 +105,6 @@ namespace MasterAngler.Wow.Utils {
             }
 
             return true;
-        }
-
-
-        private void SetMouse(int x, int y)
-        {
-            //Point objectScreenPosition = NativeMethods.ClientToScreen(Memory.WindowHandle, x, y);
-            ////Point cursorPosition = NativeMethods.GetCursorPos();
-
-            //// Game window
-            //if (IsMouseInGameWindow())
-            //{
-            //    NativeMethods.SendMessage(Memory.WindowHandle, 512, IntPtr.Zero, Lpraram(x, y));
-            //}
-
-            //return;
-
-            //Screen
-           Point mouseScreenPoint = NativeMethods.ClientToScreen(Memory.WindowHandle, x, y);
-            NativeMethods.SetCursorPos(mouseScreenPoint.X, mouseScreenPoint.Y);
-
-            ////Game window
-            //if (IsMouseInGameWindow())
-            //{
-            //    NativeMethods.SendMessage(Memory.WindowHandle, 512, IntPtr.Zero, Lpraram(x, y));
-            //}
         }
 
         private static IntPtr Lpraram(Point p) {
