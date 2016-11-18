@@ -27,7 +27,7 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Background="Yellow">
+    <StackPanel>
         <UniformGrid Columns="2">
             <Label Content="Cast Fishing"/>
             <TextBox Text="{Binding Source={x:Static properties:KeyBindings.Default}, Path=CastFishing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Input}"/>

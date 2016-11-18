@@ -8,7 +8,7 @@
         mc:Ignorable="d ignore"
         DataContext="{Binding Settings, Source={StaticResource Locator}}">
 
-    <Grid Background="Red">
+    <Grid>
         <StackPanel>
             <UniformGrid Columns="2">
                 <Label Content="Background Mode"/>

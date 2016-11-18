@@ -7,7 +7,7 @@
         mc:Ignorable="d ignore"
         DataContext="{Binding Statistics, Source={StaticResource Locator}}">
 
-    <Grid Background="Green">
+    <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Player name:"/>
