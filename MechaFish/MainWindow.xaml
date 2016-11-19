@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:tabs="clr-namespace:MechaFish.View.Tabs"
         xmlns:coverters="clr-namespace:MechaFish.Util.Coverters"
         mc:Ignorable="d ignore"
@@ -14,6 +15,14 @@
         ResizeMode="NoResize"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
 
+       <controls:MetroWindow.LeftWindowCommands>
+           <controls:WindowCommands>
+            <Button Click="LaunchMechaFishOnGitHub" ToolTip="MechaFish on GitHub">
+                <iconPacks:PackIconModern Kind="SocialGithubOctocat" Width="22" Height="22" />
+            </Button>
+           </controls:WindowCommands>
+       </controls:MetroWindow.LeftWindowCommands>
+    
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

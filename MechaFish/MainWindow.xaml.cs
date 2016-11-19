@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using MechaFish.ViewModel;
 
@@ -26,6 +27,10 @@ namespace MechaFish
              
                 comboBox.ItemsSource = Process.GetProcessesByName("Wow");;
             }
+        }
+
+        private void LaunchMechaFishOnGitHub(object sender, RoutedEventArgs e) {
+            System.Diagnostics.Process.Start("https://github.com/MurderBurger/MechaFish");
         }
     }
 }

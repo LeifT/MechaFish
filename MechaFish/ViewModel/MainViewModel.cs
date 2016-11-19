@@ -21,8 +21,8 @@ namespace MechaFish.ViewModel {
             _engine.States.Add(new Looting());
             _engine.States.Add(new CastFishing());
 
-            int p = Process.GetProcessesByName("Wow").First().Id;
-            Memory.Initialize(p);
+            //int p = Process.GetProcessesByName("Wow").First().Id;
+            //Memory.Initialize(p);
 
         }
 
