@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:coverters="clr-namespace:MechaFish.Util.Coverters"
         xmlns:tabs="clr-namespace:MechaFish.View.Tabs"
+        xmlns:coverters="clr-namespace:MechaFish.Util.Coverters"
         mc:Ignorable="d ignore"
         Height="500"
         Width="380"
-        Title="Master Angler"
+        Title="Mecha Fish"
+        ResizeMode="NoResize"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Window.Resources>
@@ -21,7 +22,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Menu.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
-            <coverters:EmptyIntConverter x:Key="EmptyIntConverter"></coverters:EmptyIntConverter>
+            <coverters:EmptyIntConverter x:Key="EmptyIntConverter"/>
             
             <Style TargetType="Menu" BasedOn="{StaticResource StandardMenu}" />
 

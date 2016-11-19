@@ -23,9 +23,9 @@
             <Label Content="Interact with Mouseover" Style="{DynamicResource DescriptionHeaderStyle}"/>
             <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Interact, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
             <Label Content="Cast Fishing" Style="{DynamicResource DescriptionHeaderStyle}"/>
-            <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Interact, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
+            <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding CastFishing, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
             <Label Content="Pause" Style="{DynamicResource DescriptionHeaderStyle}"/>
-            <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Interact, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
+            <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Pause, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
 
         </UniformGrid>
         <!--<StackPanel Margin="{StaticResource ColumnMargin}">

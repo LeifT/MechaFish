@@ -130,6 +130,11 @@
     </ApplicationDefinition>
     <Compile Include="FSM\Engine.cs" />
     <Compile Include="FSM\State.cs" />
+    <Compile Include="Properties\HotKeys.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>HotKeys.settings</DependentUpon>
+    </Compile>
     <Compile Include="Util\Coverters\EmptyIntConverter .cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Tabs\HomeViewModel.cs" />
@@ -218,6 +223,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Properties\HotKeys.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>HotKeys.Designer.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
