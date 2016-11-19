@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="MechaFish.View.Tabs.HotKeysView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:ignore="http://www.galasoft.ch/ignore"
+        mc:Ignorable="d ignore"
+        DataContext="{Binding HotKeys, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Thickness x:Key="ColumnMargin">10 5 10 5</Thickness>
+            <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid VerticalAlignment="Top">
+        <UniformGrid Columns="2" Margin="{StaticResource ColumnMargin}">
+            <Label Content="Interact with Mouseover" Style="{DynamicResource DescriptionHeaderStyle}"/>
+            <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Interact, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
+            <Label Content="Cast Fishing" Style="{DynamicResource DescriptionHeaderStyle}"/>
+            <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Interact, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
+            <Label Content="Pause" Style="{DynamicResource DescriptionHeaderStyle}"/>
+            <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Interact, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
+
+        </UniformGrid>
+        <!--<StackPanel Margin="{StaticResource ColumnMargin}">
+            <Controls:HotKeyBox Margin="{StaticResource ControlMargin}" Controls:TextBoxHelper.ClearTextButton="True" Controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Interact, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" Watermark="Unbound"/>
+        </StackPanel>-->
+    </Grid>
+</UserControl>
