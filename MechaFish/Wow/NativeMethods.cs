@@ -5,6 +5,9 @@ using System.Runtime.InteropServices;
 
 namespace MechaFish.Wow {
     public static class NativeMethods {
+        
+        #region Public Methods
+
         public static IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam) {
             return TrySendMessageNative(hWnd, msg, wParam, lParam);
         }
@@ -19,8 +22,7 @@ namespace MechaFish.Wow {
             return TryGetForegroundWindowNative();
         }
 
-        public static Rect GetWindowRect(IntPtr hWnd)
-        {
+        public static Rect GetWindowRect(IntPtr hWnd) {
             Rect lpRect;
             TryGetWindowRectNative(hWnd, out lpRect);
             return lpRect;
@@ -33,21 +35,19 @@ namespace MechaFish.Wow {
         }
 
         public static Point ClientToScreen(IntPtr hwnd, int x, int y) {
-            Point lpPoint = new Point(x, y);
+            var lpPoint = new Point(x, y);
 
             if (hwnd != IntPtr.Zero) {
                 TryClientToScreenNative(hwnd, ref lpPoint);
             }
-            
+
             return lpPoint;
         }
 
-        public static Point ScreenToClient(IntPtr hwnd, int x, int y)
-        {
-            Point lpPoint = new Point(x, y);
+        public static Point ScreenToClient(IntPtr hwnd, int x, int y) {
+            var lpPoint = new Point(x, y);
 
-            if (hwnd != IntPtr.Zero)
-            {
+            if (hwnd != IntPtr.Zero) {
                 TryScreenToClientNative(hwnd, ref lpPoint);
             }
 
@@ -57,7 +57,7 @@ namespace MechaFish.Wow {
         public static bool SetCursorPos(int x, int y) {
             return TrySetCursorPosNative(x, y);
         }
-        
+
         public static byte[] ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, long nSize) {
             var buffer = new byte[nSize];
             IntPtr bytesRead;
@@ -71,17 +71,18 @@ namespace MechaFish.Wow {
             }
 
             return buffer;
-
         }
-        
-        public static bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, IntPtr nSize, out IntPtr lpNumberOfBytesWritten) {
+
+        public static bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, IntPtr nSize,
+            out IntPtr lpNumberOfBytesWritten) {
             return TryWriteProcessMemoryNative(hProcess, lpBaseAddress, lpBuffer, nSize, out lpNumberOfBytesWritten);
         }
-        
-        public static IntPtr OpenProcess(ProcessAccess dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, int dwProcessId) {
+
+        public static IntPtr OpenProcess(ProcessAccess dwDesiredAccess,
+            [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, int dwProcessId) {
             return TryOpenProcessNative(dwDesiredAccess, bInheritHandle, dwProcessId);
         }
-        
+
         public static bool CloseHandle(IntPtr hObject) {
             if (!TryCloseHandleNative(hObject)) {
                 throw new Win32Exception(Marshal.GetLastWin32Error());
@@ -90,16 +91,73 @@ namespace MechaFish.Wow {
         }
 
         public static Point GetCursorPos() {
-            Point p = new Point();
+            var p = new Point();
             TryGetCursorPosNative(ref p);
             return p;
         }
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Rect {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
+
+        #endregion
+
+        #region PInvokes
+
+        [DllImport("user32.dll", EntryPoint = "ScreenToClient")]
+        private static extern bool TryScreenToClientNative(IntPtr hWnd, ref Point lpPoint);
+
+        [DllImport("user32.dll", EntryPoint = "ClientToScreen", CharSet = CharSet.None, ExactSpelling = false)]
+        private static extern bool TryClientToScreenNative(IntPtr hwnd, ref Point lpPoint);
+
+        [DllImport("user32.dll", EntryPoint = "GetCursorPos")]
+        private static extern bool TryGetCursorPosNative(ref Point lpPoint);
+
+        [DllImport("user32.dll", EntryPoint = "SendMessage", CharSet = CharSet.Auto, ExactSpelling = false)]
+        private static extern IntPtr TrySendMessageNative(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowThreadProcessId")]
+        private static extern uint TryGetWindowThreadProcessIdNative(IntPtr hWnd, out uint processId);
+
+        [DllImport("user32.dll", EntryPoint = "GetForegroundWindow")]
+        private static extern IntPtr TryGetForegroundWindowNative();
+
+        [DllImport("user32.dll", EntryPoint = "GetClientRect", CharSet = CharSet.None, ExactSpelling = false)]
+        private static extern bool TryGetClientRectNative(IntPtr hWnd, out Rect lpRect);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowRect")]
+        private static extern bool TryGetWindowRectNative(IntPtr hwnd, out Rect rectangle);
+
+        [DllImport("user32.dll", EntryPoint = "SetCursorPos", CharSet = CharSet.None, ExactSpelling = false)]
+        private static extern bool TrySetCursorPosNative(int x, int y);
+
+        [DllImport("kernel32.dll", EntryPoint = "ReadProcessMemory", SetLastError = true, PreserveSig = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool TryReadProcessMemoryNative(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer,
+            IntPtr nSize, out IntPtr lpNumberOfBytesRead);
+
+        [DllImport("kernel32.dll", EntryPoint = "WriteProcessMemory")]
+        private static extern bool TryWriteProcessMemoryNative(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer,
+            IntPtr nSize, out IntPtr lpNumberOfBytesWritten);
+
+        [DllImport("kernel32.dll", EntryPoint = "OpenProcess")]
+        private static extern IntPtr TryOpenProcessNative(ProcessAccess dwDesiredAccess,
+            [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, int dwProcessId);
+
+        [DllImport("kernel32.dll", EntryPoint = "CloseHandle", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool TryCloseHandleNative(IntPtr hObject);
+
+        #endregion
+
         #region Nested type: ProcessAccess
 
         [Flags]
-        public enum ProcessAccess
-        {
+        public enum ProcessAccess {
             /// <summary>Specifies all possible access flags for the process object.</summary>
             AllAccess =
                 CreateThread | DuplicateHandle | QueryInformation | SetInformation | Terminate | VMOperation | VMRead |
@@ -149,60 +207,5 @@ namespace MechaFish.Wow {
         }
 
         #endregion
-
-        #region PInvokes
-
-        [DllImport("user32.dll", EntryPoint = "ScreenToClient")]
-        private static extern bool TryScreenToClientNative(IntPtr hWnd, ref Point lpPoint);
-
-        [DllImport("user32.dll", EntryPoint = "ClientToScreen", CharSet = CharSet.None, ExactSpelling = false)]
-        private static extern bool TryClientToScreenNative(IntPtr hwnd, ref Point lpPoint);
-
-        [DllImport("user32.dll", EntryPoint = "GetCursorPos")]
-        private static extern bool TryGetCursorPosNative(ref Point lpPoint);
-
-        [DllImport("user32.dll", EntryPoint = "SendMessage", CharSet = CharSet.Auto, ExactSpelling = false)]
-        private static extern IntPtr TrySendMessageNative(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32.dll", EntryPoint = "GetWindowThreadProcessId")]
-        private static extern uint TryGetWindowThreadProcessIdNative(IntPtr hWnd, out uint processId);
-
-        [DllImport("user32.dll", EntryPoint = "GetForegroundWindow")]
-        private static extern IntPtr TryGetForegroundWindowNative();
-
-        [DllImport("user32.dll", EntryPoint = "GetClientRect", CharSet = CharSet.None, ExactSpelling = false)]
-        private static extern bool TryGetClientRectNative(IntPtr hWnd, out Rect lpRect);
-
-        [DllImport("user32.dll", EntryPoint = "GetWindowRect")]
-        private static extern bool TryGetWindowRectNative(IntPtr hwnd, out Rect rectangle);
-
-
-
-        [DllImport("user32.dll", EntryPoint = "SetCursorPos", CharSet = CharSet.None, ExactSpelling = false)]
-        private static extern bool TrySetCursorPosNative(int x, int y);
-
-        [DllImport("kernel32.dll", EntryPoint = "ReadProcessMemory", SetLastError = true, PreserveSig = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool TryReadProcessMemoryNative(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, IntPtr nSize, out IntPtr lpNumberOfBytesRead);
-
-        [DllImport("kernel32.dll", EntryPoint = "WriteProcessMemory")]
-        private static extern bool TryWriteProcessMemoryNative(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, IntPtr nSize, out IntPtr lpNumberOfBytesWritten);
-
-        [DllImport("kernel32.dll", EntryPoint = "OpenProcess")]
-        private static extern IntPtr TryOpenProcessNative(ProcessAccess dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, int dwProcessId);
-
-        [DllImport("kernel32.dll", EntryPoint = "CloseHandle", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool TryCloseHandleNative(IntPtr hObject);
-
-        #endregion
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Rect {
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
-        }
     }
 }

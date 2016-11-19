@@ -6,38 +6,25 @@ using MechaFish.Wow.Utils;
 
 namespace MechaFish.Wow {
     public class WowCamera : BaseObject {
+        private static readonly Lazy<WowCamera> Camera = new Lazy<WowCamera>(() => new WowCamera());
+
         private WowCamera() : base(0) {
             var cameraStruct = Memory.GameMemory.Read<uint>(Memory.BaseAddress + Addresses.Camera.Struct);
             SetPointer(Memory.GameMemory.Read<uint>(cameraStruct + Addresses.Camera.Offset));
         }
 
-        private static readonly Lazy<WowCamera> Camera = new Lazy<WowCamera>(() => new WowCamera());
-
         public static WowCamera ActiveCamera => Camera.Value;
 
         public Matrix CameraMatrix {
             get {
-                CameraStruct cameraStruct = Memory.GameMemory.Read<CameraStruct>(Pointer + Addresses.Camera.Matrix);
-
-                var matrix = new Matrix {
-                    M11 = cameraStruct.M11,
-                    M12 = cameraStruct.M12,
-                    M13 = cameraStruct.M13,
-                    M21 = cameraStruct.M21,
-                    M22 = cameraStruct.M22,
-                    M23 = cameraStruct.M23,
-                    M31 = cameraStruct.M31,
-                    M32 = cameraStruct.M32,
-                    M33 = cameraStruct.M33,
-                    M44 = 1f
-                };
-                return matrix;
+                var cameraStruct = Memory.GameMemory.Read<CameraStruct>(Pointer + Addresses.Camera.Matrix);
+                return new Matrix(cameraStruct.M11, cameraStruct.M12, cameraStruct.M13, 0, cameraStruct.M21, cameraStruct.M22, 
+                    cameraStruct.M23, 0, cameraStruct.M31, cameraStruct.M32, cameraStruct.M33, 0, 0, 0, 0, 1f);
             }
         }
 
         public Vector3 Forward => new Vector3(CameraMatrix.M11, CameraMatrix.M12, CameraMatrix.M13);
         public float Fov => Memory.GameMemory.Read<float>(Pointer + Addresses.Camera.Fov);
-
         public Vector3 Position => Memory.GameMemory.Read<Vector3>(Pointer + Addresses.Camera.Origin);
 
         public Matrix ProjectionMatrix {
@@ -62,7 +49,8 @@ namespace MechaFish.Wow {
 
         public bool WorldToScreen(Vector3 position, ref Point result) {
             var wowWindowSize = Memory.WindowSize;
-            var vector3 = Vector3.Project(position, 0f, 0f, wowWindowSize.X, wowWindowSize.Y, 0f, 1000f, ViewMatrix*ProjectionMatrix*Matrix.Identity);
+            var vector3 = Vector3.Project(position, 0f, 0f, wowWindowSize.X, wowWindowSize.Y, 0f, 1000f,
+                ViewMatrix*ProjectionMatrix*Matrix.Identity);
 
             result.X = (int) vector3.X;
             result.Y = (int) vector3.Y;
@@ -77,7 +65,7 @@ namespace MechaFish.Wow {
 
             return true;
         }
-        
+
         private struct CameraStruct {
             public readonly float M11;
             public readonly float M12;
@@ -90,7 +78,8 @@ namespace MechaFish.Wow {
             public readonly float M33;
 
             // ReSharper disable once UnusedMember.Local
-            public CameraStruct(float m11, float m12, float m13, float m21 , float m22, float m23, float m31, float m32, float m33) {
+            public CameraStruct(float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32,
+                float m33) {
                 M11 = m11;
                 M12 = m12;
                 M13 = m13;

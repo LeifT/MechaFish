@@ -103,18 +103,10 @@ namespace MechaFish.Wow {
 
             switch (Type.GetTypeCode(typeof(T))) {
                 case TypeCode.Object:
-                    // Double check this. It *should* work. But may not. Untested
-                    //GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-                    //Marshal.PtrToStructure(handle.AddrOfPinnedObject(), ret);
-                    //handle.Free();
-                    //break;
-
-                    // Double check this. It *should* work. But may not. Untested
                     var handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
                     ret = Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
                     handle.Free();
                     break;
-
                 case TypeCode.Boolean:
                     ret = BitConverter.ToBoolean(buffer, 0);
                     break;

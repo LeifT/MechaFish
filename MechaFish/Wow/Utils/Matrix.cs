@@ -3,8 +3,7 @@
 namespace MechaFish.Wow.Utils {
     [Serializable]
     public struct Matrix {
-        public static Matrix Identity => new Matrix
-        {
+        public static Matrix Identity => new Matrix {
             M11 = 1f,
             M22 = 1f,
             M33 = 1f,
@@ -31,8 +30,7 @@ namespace MechaFish.Wow.Utils {
         #region Constructor
         
         public Matrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31,
-            float m32, float m33, float m34, float m41, float m42, float m43, float m44)
-        {
+            float m32, float m33, float m34, float m41, float m42, float m43, float m44) {
             M11 = m11;
             M12 = m12;
             M13 = m13;
