@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+
         xmlns:tabs="clr-namespace:MechaFish.View.Tabs"
         xmlns:coverters="clr-namespace:MechaFish.Util.Coverters"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d ignore"
         Height="500"
         Width="380"
@@ -18,7 +19,7 @@
        <controls:MetroWindow.LeftWindowCommands>
            <controls:WindowCommands>
             <Button Click="LaunchMechaFishOnGitHub" ToolTip="MechaFish on GitHub">
-                <iconPacks:PackIconModern Kind="SocialGithubOctocat" Width="22" Height="22" />
+                <iconPacks:PackIconFontAwesome Kind="Github" Width="22" Height="22" />
             </Button>
            </controls:WindowCommands>
        </controls:MetroWindow.LeftWindowCommands>
@@ -115,7 +116,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Button Content="Start" Command="{Binding StartCommand}"/>
+                <ToggleButton Content="Start" Command="{Binding StartCommand}"/>
             </ToolBar>
         </ToolBarTray>
       
