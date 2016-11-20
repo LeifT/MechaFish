@@ -25,10 +25,10 @@ namespace MechaFish.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Interact {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::System.Windows.Forms.Keys Interact {
             get {
-                return ((int)(this["Interact"]));
+                return ((global::System.Windows.Forms.Keys)(this["Interact"]));
             }
             set {
                 this["Interact"] = value;
@@ -37,10 +37,10 @@ namespace MechaFish.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int CastFishing {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::System.Windows.Forms.Keys CastFishing {
             get {
-                return ((int)(this["CastFishing"]));
+                return ((global::System.Windows.Forms.Keys)(this["CastFishing"]));
             }
             set {
                 this["CastFishing"] = value;
@@ -49,10 +49,10 @@ namespace MechaFish.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Pause {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::System.Windows.Forms.Keys Pause {
             get {
-                return ((int)(this["Pause"]));
+                return ((global::System.Windows.Forms.Keys)(this["Pause"]));
             }
             set {
                 this["Pause"] = value;

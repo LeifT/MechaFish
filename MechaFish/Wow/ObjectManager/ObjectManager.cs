@@ -34,7 +34,7 @@ namespace MechaFish.Wow.ObjectManager {
             _enteties = new Dictionary<WowGuid, WowObject>();
             Dump();
 
-            WowObject.SetMouseStrategy(new ForegroundMouse());
+            WowObject.SetMouseStrategy(new BackgroundMouse());
             LocalPlayer = new WowLocalPlayer(Memory.GameMemory.Read<uint>(Memory.BaseAddress + Addresses.Player.LocalPlayer));
         }
 

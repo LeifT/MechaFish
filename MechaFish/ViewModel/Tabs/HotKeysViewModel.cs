@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Forms;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using MahApps.Metro.Controls;
@@ -20,9 +21,9 @@ namespace MechaFish.ViewModel.Tabs {
         ///     Initializes a new instance of the HotKeysViewModel class.
         /// </summary>
         public HotKeysViewModel() {
-            _interact = new HotKey((Key) HotKeys.Default.Interact, ModifierKeys.None);
-            _castFishing = new HotKey((Key) HotKeys.Default.CastFishing, ModifierKeys.None);
-            _pause = new HotKey((Key) HotKeys.Default.Pause, ModifierKeys.None);
+            _interact = new HotKey(KeyInterop.KeyFromVirtualKey((int)HotKeys.Default.Interact), ModifierKeys.None);
+            _castFishing = new HotKey(KeyInterop.KeyFromVirtualKey((int)HotKeys.Default.CastFishing), ModifierKeys.None);
+            _pause = new HotKey(KeyInterop.KeyFromVirtualKey((int)HotKeys.Default.Pause), ModifierKeys.None);
         }
 
         public HotKey Interact {
@@ -33,9 +34,9 @@ namespace MechaFish.ViewModel.Tabs {
                 }
 
                 if (value == null) {
-                    HotKeys.Default.Interact = 0;
+                    HotKeys.Default.Interact = Keys.None;
                 } else {
-                    HotKeys.Default.Interact = (int) value.Key;
+                    HotKeys.Default.Interact = (Keys) KeyInterop.VirtualKeyFromKey(value.Key);
                 }
 
                 HotKeys.Default.Save();
@@ -52,9 +53,9 @@ namespace MechaFish.ViewModel.Tabs {
                 }
 
                 if (value == null) {
-                    HotKeys.Default.CastFishing = 0;
+                    HotKeys.Default.CastFishing = Keys.None;
                 } else {
-                    HotKeys.Default.CastFishing = (int) value.Key;
+                    HotKeys.Default.CastFishing = (Keys)KeyInterop.VirtualKeyFromKey(value.Key);
                 }
 
                 HotKeys.Default.Save();
@@ -71,9 +72,9 @@ namespace MechaFish.ViewModel.Tabs {
                 }
 
                 if (value == null) {
-                    HotKeys.Default.Pause = 0;
+                    HotKeys.Default.Pause = Keys.None;
                 } else {
-                    HotKeys.Default.Pause = (int) value.Key;
+                    HotKeys.Default.Pause = (Keys)KeyInterop.VirtualKeyFromKey(value.Key);
                 }
 
                 HotKeys.Default.Save();

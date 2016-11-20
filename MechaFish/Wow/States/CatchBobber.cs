@@ -23,15 +23,9 @@ namespace MechaFish.Wow.States {
         public override void Run() {
             Thread.Sleep(_rand.Next(240, 340));
             if (_bobber.IsMouseOver || _bobber.SetMouseOver()) {
-                Keyboard.KeyPress(Keys.I);
-                //Keyboard.KeyPress(Properties.KeyBindings.Default.Interact);
+                Keyboard.KeyPress(Properties.HotKeys.Default.Interact);
                 Thread.Sleep(500);
             }
-        }
-
-        public override void Enter() {
-            //ServiceLocator.Current.GetInstance<StatisticsViewModel>().FishLooted++;
-            //ServiceLocator.Current.GetInstance<StatisticsViewModel>().Found();
         }
     }
 }

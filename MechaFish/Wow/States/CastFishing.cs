@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System.Windows.Forms;
 using MechaFish.FSM;
+using MechaFish.Properties;
+
 //using MasterAngler.ViewModel.Data;
 
 namespace MechaFish.Wow.States {
@@ -18,8 +20,7 @@ namespace MechaFish.Wow.States {
         }
 
         public override void Run() {
-            Keyboard.KeyPress(Keys.D1);
-            //ServiceLocator.Current.GetInstance<StatisticsViewModel>().StartTime = DateTime.Now;
+            Keyboard.KeyPress(HotKeys.Default.CastFishing);
             Thread.Sleep(500);
         }
     }
