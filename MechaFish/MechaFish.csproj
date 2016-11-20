@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8F8DE3FD-DBA8-470D-9B8E-0FBB2CFB8F7E}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MechaFish</RootNamespace>
     <AssemblyName>MechaFish</AssemblyName>
@@ -157,6 +157,7 @@
     <Compile Include="Wow\Keyboard.cs" />
     <Compile Include="Wow\Memory.cs" />
     <Compile Include="Wow\MemoryReader.cs" />
+    <Compile Include="Wow\MouseController.cs" />
     <Compile Include="Wow\NativeMethods.cs" />
     <Compile Include="Wow\ObjectManager\BaseObject.cs" />
     <Compile Include="Wow\ObjectManager\ObjectManager.cs" />

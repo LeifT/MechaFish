@@ -3,13 +3,7 @@ using MechaFish.Wow.Utils;
 
 namespace MechaFish.Wow.ObjectManager {
     public class WowObject : BaseObject {
-
-        //public readonly uint Address;
-
-        private static IMouseStrategy _mouseStrategy;
-
-        public WowObject(uint address) : base(address) {
-        }
+        public WowObject(uint address) : base(address) {}
 
         public WowObject() : this(0) {}
 
@@ -38,12 +32,8 @@ namespace MechaFish.Wow.ObjectManager {
         public uint Descriptor => Memory.GameMemory.Read<uint>(Pointer + Addresses.Entity.Descriptor);
         public int EntryId => Memory.GameMemory.Read<int>(Descriptor + Descriptors.ObjectFields.EntryId);
 
-        public static void SetMouseStrategy(IMouseStrategy mouseStrategy) {
-            _mouseStrategy = mouseStrategy;
-        }
-
         public bool SetMouseOver() {
-            return _mouseStrategy.SetMouseOver(this);
+            return MouseController.SetMouseOver(this);
         }
 
         public enum WowObjectType {

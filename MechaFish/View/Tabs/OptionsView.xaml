@@ -22,7 +22,7 @@
     <Grid>
         <StackPanel Margin="{StaticResource ColumnMargin}">
             <controls:ToggleSwitch IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=MouseTeleport}" OnLabel="Mouse teleportation is on" OffLabel="Mouse teleportation is off" OffSwitchBrush="Red" OnSwitchBrush="Green" IsCheckedChanged="Changed"/>
-            <controls:ToggleSwitch IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=BackgroundMode}" OnLabel="Background mode is on" OffLabel="Background mode is off" OffSwitchBrush="Red" OnSwitchBrush="Green" IsCheckedChanged="Changed"/>
+            <controls:ToggleSwitch IsChecked="{Binding IsBackgoundMode}" OnLabel="Background mode is on" OffLabel="Background mode is off" OffSwitchBrush="Red" OnSwitchBrush="Green" IsCheckedChanged="Changed"/>
         </StackPanel>
     </Grid>
 </UserControl>
