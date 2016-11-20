@@ -14,6 +14,10 @@ namespace MechaFish.ViewModel {
 
     public class MainViewModel : ViewModelBase {
         private readonly Engine _engine;
+        private bool _isRunning;
+        private int _selectedProcess;
+
+        //public ICommand StartCommand => new RelayCommand(Toggle);
 
         public MainViewModel() {
             _engine = new Engine();
@@ -26,8 +30,6 @@ namespace MechaFish.ViewModel {
 
         }
 
-        private int _selectedProcess;
-
         public int SelectedProcess {
             get { return _selectedProcess; }
 
@@ -38,24 +40,49 @@ namespace MechaFish.ViewModel {
 
                 _selectedProcess = value;
                 RaisePropertyChanged();
+
+                if (_selectedProcess == 0) {
+                    Stop();
+                }
+
+                RaisePropertyChanged(nameof(IsProcessSelected));
             }
         }
 
+        public bool IsRunning {
+            get {
+                return _isRunning;
+            }
 
-        public ICommand StartCommand => new RelayCommand(Start);
-        public ICommand StopCommand => new RelayCommand(Stop);
-        private bool _isRunning;
+            set {
+                if (_isRunning == value) {
+                    return;
+                }
+
+                Toggle();
+                
+            }
+        }
+
+        public bool IsProcessSelected => _selectedProcess > 0;
+
+        private void Toggle() {
+            if (_isRunning) {
+                Stop();
+            } else {
+                Start();
+            }
+        }
 
         private void Stop() {
-
             if (!_isRunning) {
                 return;
             }
 
             ObjectManager.Stop();
             _engine.StopEngine();
-
             _isRunning = false;
+            RaisePropertyChanged(nameof(IsRunning));
         }
 
         private void Start()  {
@@ -64,11 +91,10 @@ namespace MechaFish.ViewModel {
             }
 
             _isRunning = true;
-
             Memory.Initialize(_selectedProcess);
-
             ObjectManager.Start();
             _engine.StartEngine(30);
+            RaisePropertyChanged(nameof(IsRunning));
         }
 
     }

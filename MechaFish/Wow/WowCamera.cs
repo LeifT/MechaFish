@@ -18,8 +18,11 @@ namespace MechaFish.Wow {
         public Matrix CameraMatrix {
             get {
                 var cameraStruct = Memory.GameMemory.Read<CameraStruct>(Pointer + Addresses.Camera.Matrix);
-                return new Matrix(cameraStruct.M11, cameraStruct.M12, cameraStruct.M13, 0, cameraStruct.M21, cameraStruct.M22, 
-                    cameraStruct.M23, 0, cameraStruct.M31, cameraStruct.M32, cameraStruct.M33, 0, 0, 0, 0, 1f);
+                return new Matrix(
+                    cameraStruct.M11, cameraStruct.M12, cameraStruct.M13, 0,
+                    cameraStruct.M21, cameraStruct.M22, cameraStruct.M23, 0,
+                    cameraStruct.M31, cameraStruct.M32, cameraStruct.M33, 0,
+                    0, 0, 0, 1f);
             }
         }
 

@@ -9,6 +9,8 @@
         xmlns:tabs="clr-namespace:MechaFish.View.Tabs"
         xmlns:coverters="clr-namespace:MechaFish.Util.Coverters"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+
+
         mc:Ignorable="d ignore"
         Height="500"
         Width="380"
@@ -19,6 +21,8 @@
        <controls:MetroWindow.LeftWindowCommands>
            <controls:WindowCommands>
             <Button Click="LaunchMechaFishOnGitHub" ToolTip="MechaFish on GitHub">
+      
+
                 <iconPacks:PackIconFontAwesome Kind="Github" Width="22" Height="22" />
             </Button>
            </controls:WindowCommands>
@@ -116,7 +120,24 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <ToggleButton Content="Start" Command="{Binding StartCommand}"/>
+                <ToggleButton IsChecked="{Binding IsRunning}" IsEnabled="{Binding IsProcessSelected, Mode=OneWay}">
+                    <iconPacks:PackIconFontAwesome Width="22" Height="22">
+                        <iconPacks:PackIconFontAwesome.Style>
+                            <Style TargetType="{x:Type iconPacks:PackIconFontAwesome}" BasedOn="{StaticResource {x:Type iconPacks:PackIconFontAwesome}}">
+                                <Style.Triggers>
+                                    <DataTrigger Value="true" Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                                        <Setter Property="Kind" Value="Stop"/>
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </DataTrigger>
+                                    <DataTrigger Value="false" Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                                        <Setter Property="Kind" Value="Play"/>
+                                        <Setter Property="Foreground" Value="Green"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </iconPacks:PackIconFontAwesome.Style>
+                    </iconPacks:PackIconFontAwesome>
+                </ToggleButton>
             </ToolBar>
         </ToolBarTray>
       
