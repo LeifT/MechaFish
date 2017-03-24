@@ -46,5 +46,17 @@ namespace MechaFish.Properties {
                 this["BackgroundMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StopOnBagsFull {
+            get {
+                return ((bool)(this["StopOnBagsFull"]));
+            }
+            set {
+                this["StopOnBagsFull"] = value;
+            }
+        }
     }
 }

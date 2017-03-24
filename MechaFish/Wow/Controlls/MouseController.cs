@@ -1,8 +1,6 @@
-﻿using System;
-using MechaFish.Wow.ObjectManager;
-using MechaFish.Wow.Utils;
+﻿using MechaFish.Wow.ObjectManager;
 
-namespace MechaFish.Wow {
+namespace MechaFish.Wow.Controlls {
     public static class MouseController {
         private static IMouseStrategy _mouseStrategy;
 

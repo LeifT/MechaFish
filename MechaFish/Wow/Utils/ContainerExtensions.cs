@@ -5,7 +5,7 @@ namespace MechaFish.Wow.Utils {
         public static uint UsedSlots(this IContainer container) {
             uint usedSlots = 0;
 
-            var itemguides = Memory.GameMemory.ReadBytes(container.ItemSlots, WowGuid.Size*container.NumberOfSlots);
+            var itemguides = GameManager.GameMemory.ReadBytes(container.ItemSlots, WowGuid.Size*container.NumberOfSlots);
 
             for (var i = 0; i < container.NumberOfSlots; i++) {
                 var isEmpty = true;
@@ -25,7 +25,7 @@ namespace MechaFish.Wow.Utils {
         }
 
         public static WowGuid GetItemGuid(this IContainer container, uint slotIndex) {
-            return new WowGuid(Memory.GameMemory.ReadBytes(container.ItemSlots + slotIndex * WowGuid.Size, WowGuid.Size));
+            return new WowGuid(GameManager.GameMemory.ReadBytes(container.ItemSlots + slotIndex * WowGuid.Size, WowGuid.Size));
         }
 
         public static WowItem GetItem(this IContainer container, uint slotIndex) {

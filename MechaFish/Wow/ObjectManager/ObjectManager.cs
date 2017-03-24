@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MechaFish.Wow.Patch;
-using MechaFish.Wow.Utils;
 
 namespace MechaFish.Wow.ObjectManager {
     public static class ObjectManager {
@@ -14,27 +13,23 @@ namespace MechaFish.Wow.ObjectManager {
 
         public static WowObject MouseOverObject {
             get {
-
-                var guid = Memory.GameMemory.ReadBytes(Memory.BaseAddress + Addresses.Player.MouseOverGuid, WowGuid.Size);
+                var guid = GameManager.GameMemory.ReadBytes(GameManager.BaseAddress + Addresses.Player.MouseOverGuid, WowGuid.Size);
                 return GetObject<WowObject>(new WowGuid(guid));
             }
         }
 
         public static WowUnit TargetObject {
             get {
-
-
-                var guid = Memory.GameMemory.ReadBytes(Memory.BaseAddress + Addresses.Player.TargetGuid, WowGuid.Size);
-                var b = GetObject<WowUnit>(new WowGuid(guid));
-                return b;
+                var guid = GameManager.GameMemory.ReadBytes(GameManager.BaseAddress + Addresses.Player.TargetGuid, WowGuid.Size);
+                return GetObject<WowUnit>(new WowGuid(guid));
             }
         }
 
         static ObjectManager() {
             _enteties = new Dictionary<WowGuid, WowObject>();
-            Dump();
+            CollectEntities();
 
-            LocalPlayer = new WowLocalPlayer(Memory.GameMemory.Read<uint>(Memory.BaseAddress + Addresses.Player.LocalPlayer));
+            LocalPlayer = new WowLocalPlayer(GameManager.GameMemory.Read<uint>(GameManager.BaseAddress + Addresses.Player.LocalPlayer));
         }
 
         public static T GetObject<T>(WowGuid guid) where T : WowObject, new(){
@@ -47,35 +42,35 @@ namespace MechaFish.Wow.ObjectManager {
             return wowObject as T;
         }
  
-        public static void Dump() {
+        public static void CollectEntities() {
             var wowObjects = new Dictionary<WowGuid, WowObject>();
 
-            var list = Memory.GameMemory.Read<uint>(Memory.BaseAddress + Addresses.ObjectManager.EntitiyList);
-
+            var list = GameManager.GameMemory.Read<uint>(GameManager.BaseAddress + Addresses.ObjectManager.EntitiyList);
+            
             if (list != 0) {
-                var objectPointer = Memory.GameMemory.Read<uint>(list + Addresses.ObjectManager.FirstEntity);
+                var objectPointer = GameManager.GameMemory.Read<uint>(list + Addresses.ObjectManager.FirstEntity);
 
                 while (((objectPointer & 1) == 0) && (objectPointer != 0)) {
-                    var objectGuid = new WowGuid(Memory.GameMemory.ReadBytes(objectPointer + Addresses.ObjectManager.Guid, WowGuid.Size));
-                    var objectType = (WowObject.WowObjectType) Memory.GameMemory.Read<uint>(objectPointer + Addresses.Entity.Type);
-
+                    var objectGuid = new WowGuid(GameManager.GameMemory.ReadBytes(objectPointer + Addresses.ObjectManager.Guid, WowGuid.Size));
+                    
                     if (!wowObjects.ContainsKey(objectGuid)) {
-                        if (!_enteties.ContainsKey(objectGuid)) {
-                            wowObjects.Add(objectGuid, GetNewObject(objectType, objectPointer));
-                        } else {
+                        if (_enteties.ContainsKey(objectGuid)) {
                             wowObjects.Add(objectGuid, _enteties[objectGuid]);
+                        } else {
+                            wowObjects.Add(objectGuid, GetNewObject(objectPointer));
                         }
                     }
-
-                    objectPointer = Memory.GameMemory.Read<uint>(objectPointer + Addresses.ObjectManager.NextEntity);
+                    
+                    objectPointer = GameManager.GameMemory.Read<uint>(objectPointer + Addresses.ObjectManager.NextEntity);
                 }
             }
             _enteties = wowObjects;
         }
 
-        private static WowObject GetNewObject(WowObject.WowObjectType type, uint address) {
-            
-            switch (type) {
+        private static WowObject GetNewObject(uint address) {
+            var objectType = (WowObject.WowObjectType)GameManager.GameMemory.Read<uint>(address + Addresses.Entity.Type);
+
+            switch (objectType) {
                 case WowObject.WowObjectType.Container: {
                     return new WowContainer(address);
                 }
@@ -86,7 +81,7 @@ namespace MechaFish.Wow.ObjectManager {
                     return new WowItem(address);
                 }
                 case WowObject.WowObjectType.Unit: {
-                        return new WowUnit(address);
+                    return new WowUnit(address);
                 }
                 default: {
                     return new WowObject(address);
@@ -100,7 +95,7 @@ namespace MechaFish.Wow.ObjectManager {
 
             Task.Run(async () => {
                 while (true) {
-                    Dump();
+                    CollectEntities();
 
                     await Task.Delay(200, _token).ContinueWith(tsk => { });
 

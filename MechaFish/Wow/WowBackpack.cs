@@ -1,4 +1,4 @@
-using MechaFish.Wow.Utils;
+using MechaFish.Wow.ObjectManager;
 
 namespace MechaFish.Wow {
     public class WowBackpack : IContainer {

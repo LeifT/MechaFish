@@ -2,10 +2,10 @@
 using MechaFish.Wow.ObjectManager;
 using MechaFish.Wow.Patch;
 
-namespace MechaFish.Wow.Utils {
+namespace MechaFish.Wow.Controlls {
     public class BackgroundMouse : IMouseStrategy {
         public bool SetMouseOver(WowObject wowObject) {
-            Memory.GameMemory.Write(new IntPtr(Memory.BaseAddress + Addresses.Player.MouseOverGuid), wowObject.Guid.ToArray());
+            GameManager.GameMemory.Write(new IntPtr(GameManager.BaseAddress + Addresses.Player.MouseOverGuid), wowObject.Guid.ToArray());
             return wowObject.IsMouseOver;
         }
     }

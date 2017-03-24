@@ -8,14 +8,14 @@ namespace MechaFish.Wow.ObjectManager {
 
         public bool IsCasting => CastingSpellId > 0 || ChannelSpellId > 0;
         
-        public int CastingSpellId => Memory.GameMemory.Read<int>(Pointer + Addresses.Unit.CastingSpellId);
+        public int CastingSpellId => GameManager.GameMemory.Read<int>(Pointer + Addresses.Unit.CastingSpellId);
 
-        public int ChannelSpellId => Memory.GameMemory.Read<int>(Pointer + Addresses.Unit.ChannelSpellId);
+        public int ChannelSpellId => GameManager.GameMemory.Read<int>(Pointer + Addresses.Unit.ChannelSpellId);
 
         public override Vector3 Position => UnitPosition(this);
 
         public static Vector3 UnitPosition(WowObject wowObject) {
-            return Memory.GameMemory.Read<Vector3>(wowObject.Pointer + Addresses.Unit.Origin);
+            return GameManager.GameMemory.Read<Vector3>(wowObject.Pointer + Addresses.Unit.Origin);
         }
     }
 }

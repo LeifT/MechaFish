@@ -5,7 +5,7 @@ using MechaFish.Properties;
 using MechaFish.Wow.ObjectManager;
 using Point = System.Drawing.Point;
 
-namespace MechaFish.Wow.Utils {
+namespace MechaFish.Wow.Controlls {
     public class ForegroundMouse : IMouseStrategy {
 
         private Point _position;
@@ -36,7 +36,7 @@ namespace MechaFish.Wow.Utils {
                 return false;
             }
 
-            Point target = NativeMethods.ClientToScreen(Memory.WindowHandle, objectClientPosition.X, objectClientPosition.Y);
+            Point target = NativeMethods.ClientToScreen(GameManager.WindowHandle, objectClientPosition.X, objectClientPosition.Y);
 
             if (IsPointOutsideScreen(target)) {
                 return false;
@@ -60,7 +60,7 @@ namespace MechaFish.Wow.Utils {
                 float deltaTime = (currentTime - lastTime);
                 lastTime = currentTime;
 
-                Position = MathUtils.MoveTowards(start, target, t);
+                Position = Utils.MathUtils.MoveTowards(start, target, t);
                 t += deltaTime;
             }
             Thread.Sleep(200);

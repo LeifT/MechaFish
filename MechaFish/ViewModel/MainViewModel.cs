@@ -1,30 +1,12 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using System.Windows.Forms;
-using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
-using MechaFish.FSM;
+﻿using GalaSoft.MvvmLight;
 using MechaFish.Wow;
-using MechaFish.Wow.ObjectManager;
-using MechaFish.Wow.States;
-using Keyboard = MechaFish.Wow.Keyboard;
 
 namespace MechaFish.ViewModel {
 
     public class MainViewModel : ViewModelBase {
-        private readonly Engine _engine;
+       
         private bool _isRunning;
         private int _selectedProcess;
-
-        //public ICommand StartCommand => new RelayCommand(Toggle);
-
-        public MainViewModel() {
-            _engine = new Engine();
-            _engine.States.Add(new CatchBobber());
-            _engine.States.Add(new Looting());
-            _engine.States.Add(new CastFishing());
-        }
 
         public int SelectedProcess {
             get { return _selectedProcess; }
@@ -56,7 +38,7 @@ namespace MechaFish.ViewModel {
                 }
 
                 Toggle();
-                
+                RaisePropertyChanged();
             }
         }
 
@@ -75,10 +57,8 @@ namespace MechaFish.ViewModel {
                 return;
             }
 
-            ObjectManager.Stop();
-            _engine.StopEngine();
+            GameManager.Stop();
             _isRunning = false;
-            RaisePropertyChanged(nameof(IsRunning));
         }
 
         private void Start()  {
@@ -87,10 +67,8 @@ namespace MechaFish.ViewModel {
             }
 
             _isRunning = true;
-            Memory.Initialize(_selectedProcess);
-            ObjectManager.Start();
-            _engine.StartEngine(30);
-            RaisePropertyChanged(nameof(IsRunning));
+            GameManager.Initialize(_selectedProcess);
+            GameManager.Start();
         }
 
     }

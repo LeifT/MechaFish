@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:properties="clr-namespace:MechaFish.Properties"
+        xmlns:qc="http://QuickConverter.CodePlex.com/"
         xmlns:ignore="http://www.galasoft.ch/ignore"
         mc:Ignorable="d ignore"
         DataContext="{Binding Options, Source={StaticResource Locator}}">
@@ -12,7 +13,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <Thickness x:Key="ColumnMargin">10 5 10 5</Thickness>
-            <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+            <!--<Thickness x:Key="ControlMargin">0 5 0 0</Thickness>-->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -21,8 +22,14 @@
 
     <Grid>
         <StackPanel Margin="{StaticResource ColumnMargin}">
-            <controls:ToggleSwitch IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=MouseTeleport}" OnLabel="Mouse teleportation is on" OffLabel="Mouse teleportation is off" OffSwitchBrush="Red" OnSwitchBrush="Green" IsCheckedChanged="Changed"/>
-            <controls:ToggleSwitch IsChecked="{Binding IsBackgoundMode}" OnLabel="Background mode is on" OffLabel="Background mode is off" OffSwitchBrush="Red" OnSwitchBrush="Green" IsCheckedChanged="Changed"/>
+            <Label Content="Mouse" Style="{DynamicResource DescriptionHeaderStyle}" Foreground="#007acc"/>
+            <Rectangle Height="2" Margin="0,0,5,0" Fill="#007acc" Stroke="#007acc" HorizontalAlignment="Stretch" />
+            <controls:ToggleSwitch IsChecked="{Binding IsBackgroundMode}" OnLabel="Background mode is on" OffLabel="Background mode is off" OffSwitchBrush="#2d2d30" OnSwitchBrush="#007acc" IsCheckedChanged="Changed"/>
+            <controls:ToggleSwitch IsEnabled="{qc:Binding '!$P', P={Binding IsBackgroundMode, Mode=OneWay}}" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=MouseTeleport}" OnLabel="Mouse teleportation is on" OffLabel="Mouse teleportation is off" OffSwitchBrush="#2d2d30" OnSwitchBrush="#007acc" IsCheckedChanged="Changed"/>
+            <Label Content="Stop Conditions" Style="{DynamicResource DescriptionHeaderStyle}" Foreground="#007acc"/>
+            <Rectangle Height="2" Margin="0,0,5,0" Fill="#007acc" Stroke="#007acc" HorizontalAlignment="Stretch" />
+            <controls:ToggleSwitch IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=StopOnBagsFull}" OnLabel="Stop when inventory is full: On" OffLabel="Stop when inventory is full: Off" OffSwitchBrush="#2d2d30" OnSwitchBrush="#007acc" IsCheckedChanged="Changed"/>
+            
         </StackPanel>
     </Grid>
 </UserControl>

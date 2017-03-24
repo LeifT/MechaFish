@@ -120,8 +120,8 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <ToggleButton IsChecked="{Binding IsRunning}" IsEnabled="{Binding IsProcessSelected, Mode=OneWay}">
-                    <iconPacks:PackIconFontAwesome Width="22" Height="22">
+                <ToggleButton Content="Button" IsChecked="{Binding IsRunning}" IsEnabled="{Binding IsProcessSelected, Mode=OneWay}">
+                    <!--<iconPacks:PackIconFontAwesome Width="22" Height="22">
                         <iconPacks:PackIconFontAwesome.Style>
                             <Style TargetType="{x:Type iconPacks:PackIconFontAwesome}" BasedOn="{StaticResource {x:Type iconPacks:PackIconFontAwesome}}">
                                 <Style.Triggers>
@@ -136,7 +136,7 @@
                                 </Style.Triggers>
                             </Style>
                         </iconPacks:PackIconFontAwesome.Style>
-                    </iconPacks:PackIconFontAwesome>
+                    </iconPacks:PackIconFontAwesome>-->
                 </ToggleButton>
             </ToolBar>
         </ToolBarTray>

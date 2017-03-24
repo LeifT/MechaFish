@@ -9,15 +9,15 @@ namespace MechaFish.Wow {
         private static readonly Lazy<WowCamera> Camera = new Lazy<WowCamera>(() => new WowCamera());
 
         private WowCamera() : base(0) {
-            var cameraStruct = Memory.GameMemory.Read<uint>(Memory.BaseAddress + Addresses.Camera.Struct);
-            SetPointer(Memory.GameMemory.Read<uint>(cameraStruct + Addresses.Camera.Offset));
+            var cameraStruct = GameManager.GameMemory.Read<uint>(GameManager.BaseAddress + Addresses.Camera.Struct);
+            SetPointer(GameManager.GameMemory.Read<uint>(cameraStruct + Addresses.Camera.Offset));
         }
 
         public static WowCamera ActiveCamera => Camera.Value;
 
         public Matrix CameraMatrix {
             get {
-                var cameraStruct = Memory.GameMemory.Read<CameraStruct>(Pointer + Addresses.Camera.Matrix);
+                var cameraStruct = GameManager.GameMemory.Read<CameraStruct>(Pointer + Addresses.Camera.Matrix);
                 return new Matrix(
                     cameraStruct.M11, cameraStruct.M12, cameraStruct.M13, 0,
                     cameraStruct.M21, cameraStruct.M22, cameraStruct.M23, 0,
@@ -27,12 +27,12 @@ namespace MechaFish.Wow {
         }
 
         public Vector3 Forward => new Vector3(CameraMatrix.M11, CameraMatrix.M12, CameraMatrix.M13);
-        public float Fov => Memory.GameMemory.Read<float>(Pointer + Addresses.Camera.Fov);
-        public Vector3 Position => Memory.GameMemory.Read<Vector3>(Pointer + Addresses.Camera.Origin);
+        public float Fov => GameManager.GameMemory.Read<float>(Pointer + Addresses.Camera.Fov);
+        public Vector3 Position => GameManager.GameMemory.Read<Vector3>(Pointer + Addresses.Camera.Origin);
 
         public Matrix ProjectionMatrix {
             get {
-                var wowWindowSize = Memory.WindowSize;
+                var wowWindowSize = GameManager.WindowSize;
                 var aspectRatio = 0f;
 
                 if ((wowWindowSize.X > 0) && (wowWindowSize.Y > 0)) {
@@ -51,7 +51,7 @@ namespace MechaFish.Wow {
         }
 
         public bool WorldToScreen(Vector3 position, ref Point result) {
-            var wowWindowSize = Memory.WindowSize;
+            var wowWindowSize = GameManager.WindowSize;
             var vector3 = Vector3.Project(position, 0f, 0f, wowWindowSize.X, wowWindowSize.Y, 0f, 1000f,
                 ViewMatrix*ProjectionMatrix*Matrix.Identity);
 

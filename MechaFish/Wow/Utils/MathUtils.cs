@@ -27,22 +27,20 @@ namespace MechaFish.Wow.Utils {
             return new Point((int)Lerp(start.X, end.X, t), (int)Lerp(start.Y, end.Y, t));
         }
 
-        public static float MoveTowards(float current, float target, float maxDelta) {
-            if (Math.Abs(target - current) <= maxDelta) {
+        public static float MoveTowards(float current, float target, float maxDistanceDelta) {
+            if (Math.Abs(target - current) <= maxDistanceDelta) {
                 return target;
             }
 
-            return current + Math.Sign(target - current) * maxDelta;
+            return current + Math.Sign(target - current) * maxDistanceDelta;
         }
 
-        public static Point MoveTowards(Point current, Point target, float maxDistanceDelta)
-        {
+        public static Point MoveTowards(Point current, Point target, float maxDistanceDelta) {
             Point a = new Point(target.X - current.X, target.Y - current.Y);
 
             float magnitude = (float)Math.Sqrt(a.X * a.X + a.Y * a.Y);
 
-            if (magnitude <= maxDistanceDelta || Math.Abs(magnitude) < float.Epsilon)
-            {
+            if (magnitude <= maxDistanceDelta || Math.Abs(magnitude) < float.Epsilon) {
                 return target;
             }
 

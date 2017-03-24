@@ -20,13 +20,12 @@
 
     <Grid VerticalAlignment="Top">
         <UniformGrid Columns="2" Margin="{StaticResource ColumnMargin}">
-            <Label Content="Interact with Mouseover" Style="{DynamicResource DescriptionHeaderStyle}"/>
-            <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Interact, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
             <Label Content="Cast Fishing" Style="{DynamicResource DescriptionHeaderStyle}"/>
             <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding CastFishing, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
+            <Label Content="Interact with Mouseover" Style="{DynamicResource DescriptionHeaderStyle}"/>
+            <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Interact, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
             <Label Content="Pause" Style="{DynamicResource DescriptionHeaderStyle}"/>
             <controls:HotKeyBox Margin="{StaticResource ControlMargin}" controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Pause, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, Mode=TwoWay}" Watermark="Unbound"/>
-
         </UniformGrid>
         <!--<StackPanel Margin="{StaticResource ColumnMargin}">
             <Controls:HotKeyBox Margin="{StaticResource ControlMargin}" Controls:TextBoxHelper.ClearTextButton="True" Controls:ControlsHelper.ContentCharacterCasing="Upper" HotKey="{Binding Interact, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" Watermark="Unbound"/>

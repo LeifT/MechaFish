@@ -1,10 +1,9 @@
 ﻿using MechaFish.Wow.Patch;
-using MechaFish.Wow.Utils;
 
 namespace MechaFish.Wow.ObjectManager {
     public class WowContainer : WowItem, IContainer {
         public WowContainer(uint address) : base(address) {
-            NumberOfSlots = Memory.GameMemory.Read<byte>(Descriptor + Descriptors.ContainerFields.NumSlots);
+            NumberOfSlots = GameManager.GameMemory.Read<byte>(Descriptor + Descriptors.ContainerFields.NumSlots);
             ItemSlots = Descriptor + Descriptors.ContainerFields.Slots;
         }
 

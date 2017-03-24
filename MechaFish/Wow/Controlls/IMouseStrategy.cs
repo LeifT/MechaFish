@@ -1,6 +1,6 @@
 ﻿using MechaFish.Wow.ObjectManager;
 
-namespace MechaFish.Wow.Utils {
+namespace MechaFish.Wow.Controlls {
     public interface IMouseStrategy {
         bool SetMouseOver(WowObject wowObject);
     }

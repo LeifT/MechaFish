@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8F8DE3FD-DBA8-470D-9B8E-0FBB2CFB8F7E}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MechaFish</RootNamespace>
     <AssemblyName>MechaFish</AssemblyName>
@@ -107,6 +107,10 @@
       <HintPath>..\packages\NHotkey.Wpf.1.2.1\lib\net35\NHotkey.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="QuickConverter, Version=1.2.3.0, Culture=neutral, PublicKeyToken=9c892aa7bc2af2cf, processorArchitecture=MSIL">
+      <HintPath>..\packages\QuickConverter.1.2.3.0\lib\net40\QuickConverter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -154,10 +158,11 @@
     <Compile Include="View\Tabs\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wow\GameData.cs" />
     <Compile Include="Wow\Keyboard.cs" />
-    <Compile Include="Wow\Memory.cs" />
+    <Compile Include="Wow\GameManager.cs" />
     <Compile Include="Wow\MemoryReader.cs" />
-    <Compile Include="Wow\MouseController.cs" />
+    <Compile Include="Wow\Controlls\MouseController.cs" />
     <Compile Include="Wow\NativeMethods.cs" />
     <Compile Include="Wow\ObjectManager\BaseObject.cs" />
     <Compile Include="Wow\ObjectManager\ObjectManager.cs" />
@@ -173,12 +178,12 @@
     <Compile Include="Wow\States\CastFishing.cs" />
     <Compile Include="Wow\States\CatchBobber.cs" />
     <Compile Include="Wow\States\Looting.cs" />
-    <Compile Include="Wow\Utils\BackgroundMouse.cs" />
+    <Compile Include="Wow\Controlls\BackgroundMouse.cs" />
     <Compile Include="Wow\Utils\ByteArrayComparer.cs" />
     <Compile Include="Wow\Utils\ContainerExtensions.cs" />
-    <Compile Include="Wow\Utils\ForegroundMouse.cs" />
+    <Compile Include="Wow\Controlls\ForegroundMouse.cs" />
     <Compile Include="Wow\Utils\IContainer.cs" />
-    <Compile Include="Wow\Utils\IMouseStrategy.cs" />
+    <Compile Include="Wow\Controlls\IMouseStrategy.cs" />
     <Compile Include="Wow\Utils\MathUtils.cs" />
     <Compile Include="Wow\Utils\Matrix.cs" />
     <Compile Include="Wow\Utils\Vector3.cs" />

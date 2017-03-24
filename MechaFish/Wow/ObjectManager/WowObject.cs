@@ -1,4 +1,5 @@
-﻿using MechaFish.Wow.Patch;
+﻿using MechaFish.Wow.Controlls;
+using MechaFish.Wow.Patch;
 using MechaFish.Wow.Utils;
 
 namespace MechaFish.Wow.ObjectManager {
@@ -27,10 +28,10 @@ namespace MechaFish.Wow.ObjectManager {
         }
 
         public bool IsMouseOver => ObjectManager.MouseOverObject.IsValid && ObjectManager.MouseOverObject.Guid.Equals(Guid);
-        public WowGuid Guid => new WowGuid(Memory.GameMemory.ReadBytes(Descriptor, WowGuid.Size));
-        public WowObjectType Type => (WowObjectType) Memory.GameMemory.Read<int>(Pointer + Addresses.Entity.Type);
-        public uint Descriptor => Memory.GameMemory.Read<uint>(Pointer + Addresses.Entity.Descriptor);
-        public int EntryId => Memory.GameMemory.Read<int>(Descriptor + Descriptors.ObjectFields.EntryId);
+        public WowGuid Guid => new WowGuid(GameManager.GameMemory.ReadBytes(Descriptor, WowGuid.Size));
+        public WowObjectType Type => (WowObjectType) GameManager.GameMemory.Read<int>(Pointer + Addresses.Entity.Type);
+        public uint Descriptor => GameManager.GameMemory.Read<uint>(Pointer + Addresses.Entity.Descriptor);
+        public int EntryId => GameManager.GameMemory.Read<int>(Descriptor + Descriptors.ObjectFields.EntryId);
 
         public bool SetMouseOver() {
             return MouseController.SetMouseOver(this);

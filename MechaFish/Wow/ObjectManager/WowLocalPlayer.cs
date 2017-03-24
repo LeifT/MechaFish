@@ -13,8 +13,8 @@ namespace MechaFish.Wow.ObjectManager {
 
         //public WowLocalPlayer() : base(0) {}
 
-        public bool IsLooting => Memory.GameMemory.Read<byte>(Memory.BaseAddress + Addresses.Player.IsLooting) > 0;
-        public bool IsTexting => Memory.GameMemory.Read<byte>(Memory.BaseAddress + Addresses.Player.IsTexting) > 0;
+        public bool IsLooting => GameManager.GameMemory.Read<byte>(GameManager.BaseAddress + Addresses.Player.IsLooting) > 0;
+        public bool IsTexting => GameManager.GameMemory.Read<byte>(GameManager.BaseAddress + Addresses.Player.IsTexting) > 0;
 
         public uint BagSlotsEmpty => BagSlotsMax - BagSlotsUsed;
 
@@ -33,7 +33,7 @@ namespace MechaFish.Wow.ObjectManager {
             }
         }
 
-        public string Name => Memory.GameMemory.ReadCString(Memory.BaseAddress + Addresses.Player.Name, Encoding.UTF8);
+        public string Name => GameManager.GameMemory.ReadCString(GameManager.BaseAddress + Addresses.Player.Name, Encoding.UTF8);
 
         public uint BagSlotsUsed {
             get {
@@ -55,7 +55,7 @@ namespace MechaFish.Wow.ObjectManager {
                 throw new ArgumentOutOfRangeException();
             }
 
-            return new WowGuid(Memory.GameMemory.ReadBytes(Memory.BaseAddress + Addresses.Player.ItemSlots + bagIndex * WowGuid.Size, WowGuid.Size));
+            return new WowGuid(GameManager.GameMemory.ReadBytes(GameManager.BaseAddress + Addresses.Player.ItemSlots + bagIndex * WowGuid.Size, WowGuid.Size));
         }
 
         public WowContainer GetBag(uint bagIndex) {

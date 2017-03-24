@@ -9,11 +9,11 @@ namespace MechaFish.Wow {
         private const uint WM_CHAR = 0x0102;
 
         public static void KeyDown(Keys key) {
-            NativeMethods.SendMessage(Memory.WindowHandle, WM_KEYDOWN, new IntPtr((long)key), (IntPtr) 0);
+            NativeMethods.SendMessage(GameManager.WindowHandle, WM_KEYDOWN, new IntPtr((long)key), (IntPtr) 0);
         }
 
         public static void KeyUp(Keys key) {
-            NativeMethods.SendMessage(Memory.WindowHandle, WM_KEYUP, new IntPtr((long)key), (IntPtr) 0);
+            NativeMethods.SendMessage(GameManager.WindowHandle, WM_KEYUP, new IntPtr((long)key), (IntPtr) 0);
         }
 
         public static void KeyPress(Keys key) {
